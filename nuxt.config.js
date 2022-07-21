@@ -44,4 +44,9 @@ export default {
       },
     },
   },
+
+  // port
+  server: {
+    port: 4000,
+  },
 }

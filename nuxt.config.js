@@ -3,7 +3,7 @@ export default {
   head: {
     title: 'toy_front_team1_front',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ko',
     },
     meta: [
       { charset: 'utf-8' },
@@ -16,6 +16,10 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
+
+  styleResources: {
+    scss: ['@/assets/scss/colors.scss'],
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -30,8 +34,14 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['@nuxtjs/style-resources'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    loaders: {
+      scss: {
+        implementation: require('sass'),
+      },
+    },
+  },
 }

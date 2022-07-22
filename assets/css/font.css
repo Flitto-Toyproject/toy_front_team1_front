@@ -1,0 +1,32 @@
+/* NanumGothic */
+@font-face {
+  font-family: 'NanumGothic-Bold';
+  src: local('NanumGothic-Bold'),
+  url('@/assets/font/NanumGothic-Bold.ttf') format("truetype"),
+}
+
+@font-face {
+  font-family: 'NanumGothic-ExtraBold';
+  src: local('NanumGothic-ExtraBold'),
+  url('@/assets/font/NanumGothic-ExtraBold.ttf') format("truetype"),
+}
+
+@font-face {
+  font-family: 'NanumGothic-Regular';
+  src: local('NanumGothic-Regular'),
+  url('@/assets/font/NanumGothic-Regular.ttf') format("truetype"),
+}
+
+
+/* Helvetica Neue */
+@font-face {
+  font-family: 'HelveticaNeue-Bold';
+  src: local('HelveticaNeue-Bold'),
+  url('@/assets/font/HelveticaNeue-Bold.ttf') format("truetype"),
+}
+
+@font-face {
+  font-family: 'HelveticaNeue-Medium';
+  src: local('HelveticaNeue-Medium'),
+  url('@/assets/font/HelveticaNeue-Medium.ttf') format("truetype"),
+}

@@ -79,20 +79,34 @@ footer {
   width: 100%;
   justify-content: space-between;
   margin-bottom: 1em;
+
+  @include tablet {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }
 .footer-info__description:not(:first-child) {
   margin-left: 3em;
+  @include tablet {
+    margin-left: 0em;
+  }
 }
 .footer-bottom-wrapper {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+  @include tablet {
+    flex-direction: column;
+  }
 }
 .footer-bottom-wrapper__sns-wrapper {
   display: flex;
   flex-direction: row;
-  width: 10vw;
+  width: 10em;
   justify-content: space-between;
+  @include tablet {
+    margin-top: 1em;
+  }
 }
 </style>

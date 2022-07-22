@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+html, body, p, ul, li, ol, dl, dt, dd, fieldset {
+  padding: 0px;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+input[type="checkbox"], label {
+  margin: 0;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+fieldset {
+  border: none;
+}
+
+a {
+  cursor: pointer;
+}
+
+a:focus {
+  outline: none;
+}
+
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+i[class*="icon-"] {
+  display: inline-flex;
+}
+
+input {
+  border: none;
+}

@@ -1,0 +1,25 @@
+// Break Point
+$tablet: 768px;
+$laptop: 1020px;
+$desktop: 1440px;
+
+
+// Mixins
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: #{$laptop}) {
+    @content;
+  }
+}
+
+
+@mixin desktop {
+  @media (max-width: #{$desktop}) {
+    @content;
+  }
+}

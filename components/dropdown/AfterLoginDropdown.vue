@@ -28,18 +28,42 @@
         </li>
         <li class="nav__link">
           <NuxtLink to="/notificationpage">알림</NuxtLink>
-          <button>
-            <img src="@/assets/svg/login/down.svg" alt="show_notification" />
+          <button @click="showNoti">
+            <img
+              v-if="!isShowingNoti"
+              src="@/assets/svg/login/down.svg"
+              alt="show_notification"
+            />
+            <img
+              v-else
+              src="@/assets/svg/login/up.svg"
+              alt="show_notification"
+            />
           </button>
         </li>
+        <div v-if="isShowingNoti">
+          <LoginNotiDropdown />
+        </div>
       </ul>
     </nav>
   </div>
 </template>
 
 <script>
+import LoginNotiDropdown from './LoginNotiDropdown.vue'
 export default {
   name: 'AfterLoginDropdown',
+  components: { LoginNotiDropdown },
+  data() {
+    return {
+      isShowingNoti: true,
+    }
+  },
+  methods: {
+    showNoti() {
+      this.isShowingNoti = !this.isShowingNoti
+    },
+  },
 }
 </script>
 
@@ -108,8 +132,5 @@ export default {
   &:hover {
     background-color: $normal-gray;
   }
-}
-
-.nav__link--dropdown-tag {
 }
 </style>

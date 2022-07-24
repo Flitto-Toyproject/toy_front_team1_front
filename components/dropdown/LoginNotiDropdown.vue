@@ -9,14 +9,20 @@
         :key="noti.notification_id"
         class="noti-dropdown__list"
       >
-        <img
-          src="@/assets/svg/flitto/flitto_logo.svg"
-          alt="flitto_symbol"
-          class="noti-dropdown__logo"
-        />
+        <div class="noti-dropdown__logo-wrapper">
+          <img
+            src="@/assets/svg/flitto/flitto_logo.svg"
+            alt="flitto_symbol"
+            class="noti-dropdown__logo"
+          />
+        </div>
+
         <div class="noti-dropdown__noti-content">
           <p>{{ noti.description }}</p>
           <p class="noti-dropdown__noti-time">{{ noti.time }}</p>
+        </div>
+        <div class="noti-dropdown__noti-alert-wrapper">
+          <div class="noti-dropdown__noti-alert"></div>
         </div>
       </li>
     </ul>
@@ -74,8 +80,9 @@ export default {
 .noti-dropdown__list {
   width: 100%;
   height: 5em;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
   display: flex;
+  justify-content: space-between;
   font-size: 0.8rem;
 
   &:hover {
@@ -84,7 +91,13 @@ export default {
   }
 }
 
+.noti-dropdown__logo-wrapper {
+  position: relative;
+}
+
 .noti-dropdown__logo {
+  position: absolute;
+  top: 0.5rem;
   width: 1rem;
 }
 
@@ -97,6 +110,19 @@ export default {
 
 .noti-dropdown__noti-time {
   color: $deep-gray;
+}
+
+.noti-dropdown__noti-alert-wrapper {
+  position: relative;
+}
+
+.noti-dropdown__noti-alert {
+  position: absolute;
+  top: 0.5rem;
+  width: 0.5em;
+  height: 0.5em;
+  background-color: $normal-blue;
+  border-radius: 0.5em;
 }
 
 .noti-dropdown__footer {

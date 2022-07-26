@@ -91,3 +91,6 @@ sw.*
 
 # editorconfig
 .editorconfig
+
+# env
+.env

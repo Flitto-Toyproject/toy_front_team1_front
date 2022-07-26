@@ -31,7 +31,11 @@
           <button @click="showNoti">
             <img
               v-if="!isShowingNoti"
-              src="@/assets/svg/login/down.svg"
+              :src="
+                !isShowingNoti
+                  ? '@/assets/svg/login/down.svg'
+                  : '@/assets/svg/login/up.svg'
+              "
               alt="show_notification"
             />
             <img

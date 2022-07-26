@@ -1,0 +1,55 @@
+<template>
+  <div class="tag">
+    <div class="tag__title">{{ tag }}</div>
+    <img
+      class="tag__cancel-img"
+      src="@/assets/svg/content/cancel_icon.svg"
+      alt="cancel_icon"
+      @click="removeTag"
+    />
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'TagContent',
+  props: {
+    tag: {
+      type: String,
+      default: '',
+      required: true,
+    },
+  },
+  data() {
+    return {}
+  },
+  methods: {
+    removeTag() {
+      this.$emit('remove')
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.tag {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 7em;
+  height: 2.5em;
+  border: 1px solid $deep-gray;
+  border-radius: 0.8em;
+  position: relative;
+  &__title {
+    color: $black;
+  }
+  &__cancel-img {
+    position: absolute;
+    top: 0.2em;
+    right: 0.1em;
+    cursor: pointer;
+  }
+}
+</style>

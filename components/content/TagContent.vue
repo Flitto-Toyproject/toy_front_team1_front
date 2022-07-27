@@ -2,6 +2,7 @@
   <div class="tag">
     <div class="tag__title">{{ tag }}</div>
     <img
+      v-if="isEditing"
       class="tag__cancel-img"
       src="@/assets/svg/content/cancel_icon.svg"
       alt="cancel_icon"
@@ -14,6 +15,11 @@
 export default {
   name: 'TagContent',
   props: {
+    isEditing: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
     tag: {
       type: String,
       default: '',

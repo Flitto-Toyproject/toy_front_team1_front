@@ -6,7 +6,16 @@ html {
   font-size: 100%;
 }
 
-html, body, p, ul, li, ol, dl, dt, dd, fieldset {
+html,
+body,
+p,
+ul,
+li,
+ol,
+dl,
+dt,
+dd,
+fieldset {
   padding: 0px;
   margin: 0;
 }
@@ -15,7 +24,12 @@ ul {
   list-style: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   padding: 0;
 }
@@ -30,7 +44,8 @@ button:focus {
   outline: none;
 }
 
-input[type="checkbox"], label {
+input[type='checkbox'],
+label {
   margin: 0;
 }
 
@@ -42,7 +57,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -60,17 +75,21 @@ a:focus {
   outline: none;
 }
 
-
 fieldset {
   margin: 0;
   padding: 0;
   border: none;
 }
 
-i[class*="icon-"] {
+i[class*='icon-'] {
   display: inline-flex;
 }
 
 input {
   border: none;
+}
+
+/* ckeditor editing 부분 최소 최대 */
+.ck-editor__editable {
+  height: 30rem;
 }

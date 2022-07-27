@@ -89,7 +89,15 @@ input {
   border: none;
 }
 
+/* ckeditor */
+
+.ck {
+  width: 916.55px; /* toolbar 영역 맞춰 px로 작성 */
+}
+
 /* ckeditor editing 부분 최소 최대 */
 .ck-editor__editable {
   height: 30rem;
+  word-wrap: break-word;
+  word-break: break-word;
 }

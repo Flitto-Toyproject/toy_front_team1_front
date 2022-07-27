@@ -80,7 +80,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  max-width: 70rem;
-}
+// .container {
+//   max-width: 50rem;
+// }
 </style>

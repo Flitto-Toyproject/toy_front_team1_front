@@ -1,45 +1,43 @@
 <template>
-  <div class="container">
-    <div class="content-wrap">
-      <div class="editor__wrap"><EditorComponent /></div>
-      <div class="content-additional">
-        <div class="content-additional__tags-wrapper">
-          <div class="content-additional__items">
-            <strong class="content-additional__title">Tags</strong>
-            <InputBasic
-              v-model="inputTag"
-              :placeholder="'태그를 입력해주세요'"
-              :add-button="true"
-              :type="'text'"
-              @add="addTag(inputTag)"
-            />
-          </div>
-          <div class="content-additional__tags">
-            <TagContent
-              v-for="tag in tags"
-              :isEditing="true"
-              :key="tag"
-              class="content-additional__tag-content"
-              :tag="tag"
-              @remove="removeTag(tag)"
-            />
-          </div>
-        </div>
+  <div class="content-wrap">
+    <div class="editor__wrap"><EditorComponent /></div>
+    <div class="content-additional">
+      <div class="content-additional__tags-wrapper">
         <div class="content-additional__items">
-          <strong class="content-additional__title">Thumbnail</strong>
+          <strong class="content-additional__title">Tags</strong>
           <InputBasic
-            v-model="thumbnail"
-            :placeholder="'썸네일 URL을 입력해주세요'"
+            v-model="inputTag"
+            :placeholder="'태그를 입력해주세요'"
             :add-button="true"
             :type="'text'"
+            @add="addTag(inputTag)"
           />
-          <div class="content-additional__preview" />
         </div>
-        <div class="button-wrapper">
-          <ButtonContent :value="'발행'" />
-          <ButtonContent :value="'임시저장'" />
-          <ButtonContent :value="'취소'" />
+        <div class="content-additional__tags">
+          <TagContent
+            v-for="tag in tags"
+            :isEditing="true"
+            :key="tag"
+            class="content-additional__tag-content"
+            :tag="tag"
+            @remove="removeTag(tag)"
+          />
         </div>
+      </div>
+      <div class="content-additional__items">
+        <strong class="content-additional__title">Thumbnail</strong>
+        <InputBasic
+          v-model="thumbnail"
+          :placeholder="'썸네일 URL을 입력해주세요'"
+          :add-button="true"
+          :type="'text'"
+        />
+        <div class="content-additional__preview" />
+      </div>
+      <div class="button-wrapper">
+        <ButtonContent :value="'발행'" />
+        <ButtonContent :value="'임시저장'" />
+        <ButtonContent :value="'취소'" />
       </div>
     </div>
   </div>
@@ -89,10 +87,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-}
 .editor__wrap {
   display: flex;
   justify-content: center;

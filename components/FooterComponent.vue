@@ -23,30 +23,34 @@
       <ul class="footer-bottom-wrapper__sns-wrapper">
         <li>
           <img
-            class="header-left__logo-img"
+            class="sns-wrapper__logo-img"
             src="@/assets/svg/footer/flitto_small_logo.svg"
             alt="flitto_small_logo"
+            @click="goSite('flitto')"
           />
         </li>
         <li>
           <img
-            class="header-left__logo-img"
+            class="sns-wrapper__logo-img"
             src="@/assets/svg/footer/sns_facebook_logo.svg"
             alt="sns_facebook_logo"
+            @click="goSite('facebook')"
           />
         </li>
         <li>
           <img
-            class="header-left__logo-img"
+            class="sns-wrapper__logo-img"
             src="@/assets/svg/footer/sns_instar_logo.svg"
             alt="sns_instar_logo"
+            @click="goSite('instar')"
           />
         </li>
         <li>
           <img
-            class="header-left__logo-img"
+            class="sns-wrapper__logo-img"
             src="@/assets/svg/footer/sns_naver_logo.svg"
             alt="sns_naver_logo"
+            @click="goSite('naver')"
           />
         </li>
       </ul>
@@ -57,6 +61,17 @@
 <script>
 export default {
   name: 'FooterComponent',
+  methods: {
+    goSite(_site) {
+      const siteObj = {
+        flitto: 'https://www.flitto.com/language/translation/text',
+        facebook: 'https://www.facebook.com/flitto',
+        instar: 'https://www.instagram.com/flitto_official',
+        naver: 'https://blog.naver.com/flitto_inc',
+      }
+      window.location.href = siteObj[_site]
+    },
+  },
 }
 </script>
 
@@ -71,7 +86,6 @@ footer {
   color: $black;
   word-break: break-all;
   font-size: 0.875em;
-  font-family: 'NanumGothic-Regular';
 }
 .footer-info {
   display: flex;
@@ -79,16 +93,15 @@ footer {
   width: 100%;
   justify-content: space-between;
   margin-bottom: 1em;
-
   @include tablet {
     flex-direction: column;
     justify-content: flex-start;
   }
-}
-.footer-info__description:not(:first-child) {
-  margin-left: 3em;
-  @include tablet {
-    margin-left: 0em;
+  &__description:not(:first-child) {
+    margin-left: 3em;
+    @include tablet {
+      margin-left: 0em;
+    }
   }
 }
 .footer-bottom-wrapper {
@@ -99,14 +112,17 @@ footer {
   @include tablet {
     flex-direction: column;
   }
-}
-.footer-bottom-wrapper__sns-wrapper {
-  display: flex;
-  flex-direction: row;
-  width: 10em;
-  justify-content: space-between;
-  @include tablet {
-    margin-top: 1em;
+  &__sns-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 10em;
+    justify-content: space-between;
+    @include tablet {
+      margin-top: 1em;
+    }
   }
+}
+.sns-wrapper__logo-img {
+  cursor: pointer;
 }
 </style>

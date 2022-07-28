@@ -1,43 +1,54 @@
 <template>
-  <div class="content-wrap">
-    <div class="editor__wrap"><EditorComponent /></div>
-    <div class="content-additional">
-      <div class="content-additional__tags-wrapper">
+  <div class="content-container">
+    <div class="content-wrap">
+      <div class="title-input">
+        <input
+          class="title-input__form"
+          type="text"
+          :value="title"
+          :placeholder="'제목을 입력하세요'"
+          @input="updateTitle"
+        />
+      </div>
+      <EditorComponent v-model="contentInput" />
+      <div class="content-additional">
+        <div class="content-additional__tags-wrapper">
+          <div class="content-additional__items">
+            <strong class="content-additional__title">Tags</strong>
+            <InputBasic
+              v-model="inputTag"
+              :placeholder="'태그를 입력해주세요'"
+              :add-button="true"
+              :type="'text'"
+              @add="addTag(inputTag)"
+            />
+          </div>
+          <div class="content-additional__tags">
+            <TagContent
+              v-for="tag in tags"
+              :key="tag"
+              :is-editing="true"
+              class="content-additional__tag-content"
+              :tag="tag"
+              @remove="removeTag(tag)"
+            />
+          </div>
+        </div>
         <div class="content-additional__items">
-          <strong class="content-additional__title">Tags</strong>
+          <strong class="content-additional__title">Thumbnail</strong>
           <InputBasic
-            v-model="inputTag"
-            :placeholder="'태그를 입력해주세요'"
+            v-model="thumbnail"
+            :placeholder="'썸네일 URL을 입력해주세요'"
             :add-button="true"
             :type="'text'"
-            @add="addTag(inputTag)"
           />
+          <div class="content-additional__preview" />
         </div>
-        <div class="content-additional__tags">
-          <TagContent
-            v-for="tag in tags"
-            :isEditing="true"
-            :key="tag"
-            class="content-additional__tag-content"
-            :tag="tag"
-            @remove="removeTag(tag)"
-          />
+        <div class="button-wrapper">
+          <ButtonContent :value="'발행'" />
+          <ButtonContent :value="'임시저장'" />
+          <ButtonContent :value="'취소'" />
         </div>
-      </div>
-      <div class="content-additional__items">
-        <strong class="content-additional__title">Thumbnail</strong>
-        <InputBasic
-          v-model="thumbnail"
-          :placeholder="'썸네일 URL을 입력해주세요'"
-          :add-button="true"
-          :type="'text'"
-        />
-        <div class="content-additional__preview" />
-      </div>
-      <div class="button-wrapper">
-        <ButtonContent :value="'발행'" />
-        <ButtonContent :value="'임시저장'" />
-        <ButtonContent :value="'취소'" />
       </div>
     </div>
   </div>
@@ -53,6 +64,8 @@ export default {
   components: { TagContent, InputBasic, ButtonContent, EditorComponent },
   data() {
     return {
+      title: '',
+      contentInput: '',
       tags: [
         'frontend',
         'vue.js',
@@ -82,19 +95,37 @@ export default {
       }
       this.tags.push(_inputTag)
     },
+    updateTitle(e) {
+      this.title = e.target.value
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.editor__wrap {
+.content-container {
   display: flex;
   justify-content: center;
 }
 .content-wrap {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 70rem;
   min-height: 90vh;
+  padding: 1rem 2rem;
+}
+.title-input {
+  width: 55rem;
+  margin: 1rem;
+  &__form {
+    border: 0.1rem solid $light-gray;
+    border-radius: 0.3rem;
+    width: 100%;
+    height: 2rem;
+    padding-left: 0.5rem;
+  }
 }
 .content-additional {
   display: flex;
@@ -134,6 +165,7 @@ export default {
     border-radius: 1em;
   }
 }
+
 .button-wrapper {
   display: flex;
   flex-direction: row;

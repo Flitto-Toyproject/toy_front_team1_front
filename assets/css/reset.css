@@ -90,9 +90,8 @@ input {
 }
 
 /* ckeditor */
-
 .ck {
-  width: 916.55px; /* toolbar 영역 맞춰 px로 작성 */
+  width: 55rem;
 }
 
 /* ckeditor editing 부분 최소 최대 */

@@ -1,0 +1,52 @@
+<template>
+  <div>
+    <client-only class="container">
+      <ckeditor
+        :value="editorData"
+        :editor="editor"
+        :config="editorConfig"
+        @input="(event) => $emit('input', event)"
+      ></ckeditor>
+    </client-only>
+    <div v-html="editorData"></div>
+  </div>
+</template>
+
+<script>
+let Editor
+let CKEditor
+
+/* ckeditor는 client side only이다. */
+if (process.client) {
+  Editor = require('@ckeditor/ckeditor5-build-classic')
+  CKEditor = require('@ckeditor/ckeditor5-vue2')
+} else {
+  CKEditor = {
+    component: { template: '<div></div>' },
+  }
+}
+
+export default {
+  name: 'EditorComponent',
+  components: { ckeditor: CKEditor.component },
+  props: {
+    editorData: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      editor: Editor,
+      editorConfig: {},
+    }
+  },
+  methods: {
+    changedData() {
+      console.log('changed!')
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped></style>

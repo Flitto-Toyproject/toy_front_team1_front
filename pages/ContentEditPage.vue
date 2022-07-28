@@ -10,7 +10,7 @@
           @input="updateTitle"
         />
       </div>
-      <EditorComponent v-model="contentInput" />
+      <EditorComponent v-model="editorInput" />
       <div class="content-additional">
         <div class="content-additional__tags-wrapper">
           <div class="content-additional__items">
@@ -45,9 +45,13 @@
           <div class="content-additional__preview" />
         </div>
         <div class="button-wrapper">
-          <ButtonContent :value="'발행'" />
-          <ButtonContent :value="'임시저장'" />
-          <ButtonContent :value="'취소'" />
+          <ButtonContent
+            :value="'발행'"
+            :is-major="true"
+            @click="publishContent"
+          />
+          <ButtonContent :value="'임시저장'" @click="saveContent" />
+          <ButtonContent :value="'취소'" @click="cancelContent" />
         </div>
       </div>
     </div>
@@ -55,17 +59,23 @@
 </template>
 
 <script>
+// import axios from 'axios'
+
 import ButtonContent from '@/components/content/ButtonContent'
 import InputBasic from '@/components/basic/InputBasic'
 import TagContent from '@/components/content/TagContent'
 import EditorComponent from '@/components/EditorComponent.vue'
+
+// const WRITER_USER_ID = 'dkkim0122@gmail.com'
+// const THUMBNAIL = 'thumbnail_url'
+
 export default {
   name: 'ContentPage',
   components: { TagContent, InputBasic, ButtonContent, EditorComponent },
   data() {
     return {
       title: '',
-      contentInput: '',
+      editorInput: '',
       tags: [
         'frontend',
         'vue.js',
@@ -97,6 +107,38 @@ export default {
     },
     updateTitle(e) {
       this.title = e.target.value
+    },
+    publishContent() {
+      console.log('content published')
+      // const contentData = {
+      //   writer_user_id: WRITER_USER_ID,
+      //   title: this.title,
+      //   content: this.editorInput,
+      //   tags: this.tags,
+      //   thumnail: THUMBNAIL,
+      //   status: 'W', // 발행 : editing -> waiting
+      // }
+
+      // const res = await axios.post('localhost:33000/', { params: contentData })
+      // console.log('res', res)
+    },
+    saveContent() {
+      console.log('content saved')
+      // const contentData = {
+      //   writer_user_id: WRITER_USER_ID,
+      //   title: this.title,
+      //   content: this.editorInput,
+      //   tags: this.tags,
+      //   thumnail: THUMBNAIL,
+      //   status: 'E', // 임시저장 : editing
+      // }
+
+      // const res = await axios.post('localhost:33000/', { params: contentData })
+      // console.log('res', res)
+    },
+    cancelContent() {
+      console.log('canceled')
+      this.$router.push('/')
     },
   },
 }

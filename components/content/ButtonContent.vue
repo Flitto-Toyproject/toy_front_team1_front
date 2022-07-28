@@ -1,7 +1,10 @@
 <template>
   <div
     class="button-content"
-    :class="{ 'button-content__focus': isFocus }"
+    :class="{
+      'button-content__focus': isFocus,
+      'button-content__major': isMajor,
+    }"
     @click="clickButton"
   >
     {{ value }}
@@ -16,6 +19,12 @@ export default {
       type: String,
       required: true,
     },
+    isMajor: {
+      // 버튼 배경이 navy or white
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   data() {
     return {
@@ -25,6 +34,7 @@ export default {
   methods: {
     clickButton() {
       this.isFocus = !this.isFocus
+      this.$emit('click')
     },
   },
 }
@@ -45,6 +55,11 @@ export default {
   text-align: center;
   word-break: keep-all;
   &__focus {
+    background-color: $deep-blue;
+    color: white;
+    font-weight: 700;
+  }
+  &__major {
     background-color: $deep-blue;
     color: white;
     font-weight: 700;

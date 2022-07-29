@@ -1,22 +1,19 @@
 <template>
   <div>
-    <Header />
+    <!-- <RejectModal isReject="true" content="" /> -->
     <BeforeLoginDropdown />
-    <AfterLoginDropdown />>
+    <AfterLoginDropdown />
   </div>
 </template>
 
 <script>
-import Header from '@/components/HeaderComponent'
-import BeforeLoginDropdown from '@/components/dropdown/BeforeLoginDropdown'
-import AfterLoginDropdown from '@/components/dropdown/AfterLoginDropdown'
-
 export default {
   name: 'ViewComponent',
-  components: {
-    Header,
-    BeforeLoginDropdown,
-    AfterLoginDropdown,
+  components: {},
+  data() {
+    return {
+      content: '',
+    }
   },
 }
 </script>

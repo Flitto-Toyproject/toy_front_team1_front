@@ -3,16 +3,16 @@
     <div class="content-wrapper">
       <div class="content-top-wrapper">
         <div class="title-wrapper">
-          <strong class="title">{{ post.title }}</strong>
-          <StatusContent :is-show="true" :status="post.status" />
+          <strong class="title">{{ POST.title }}</strong>
+          <StatusContent :is-show="true" :status="POST.status" />
         </div>
         <div class="extra-wrapper">
           <div class="profile-wrapper">
             <div class="profile-wrapper__profile-img" />
             <p class="profile-wrapper__profile-writer">
-              작성자 : {{ post.writer_user_id }}
+              작성자 : {{ POST.writer_user_id }}
             </p>
-            <span class="profile-wrapper__date">{{ post.updated_at }}</span>
+            <span class="profile-wrapper__date">{{ POST.updated_at }}</span>
             <img
               class="profile-wrapper__share"
               src="@/assets/svg/content/share_icon.svg"
@@ -21,26 +21,32 @@
             />
           </div>
           <div class="action-wrapper">
-            <p class="action__reject" @click="actionByButton('reject')">
+            <p class="action__reject" @click="rejectAction('reject')">
               거절사유
             </p>
-            <p class="action__claim" @click="actionByButton('claim')">
-              이의제기
+            <p class="action__claim" @click="claimAction('claim')">이의제기</p>
+            <p class="action__modify" @click="modifyAction('modify')">
+              <nuxt-link to="contenteditpage">수정하기</nuxt-link>
             </p>
-            <p class="action__modify" @click="actionByButton('modify')">
-              수정하기
-            </p>
-            <p class="action__remove" @click="actionByButton('remove')">
+            <p class="action__remove" @click="removeAction('remove')">
               삭제하기
             </p>
           </div>
         </div>
       </div>
-      <DefaultModal v-if="modalObj.isShow" @scroll.prevent>
+      <DefaultModal v-if="simpleModalObj.isShow">
         <SimpleModal
-          :modal-obj="modalObj"
+          :modal-obj="simpleModalObj"
           @confirm="confirmModal"
           @close="closeModal"
+        />
+      </DefaultModal>
+      <DefaultModal v-if="rejectModalObj.isShow">
+        <RejectModal
+          v-model="rejectInput"
+          :modal-obj="rejectModalObj"
+          @close="closeModal"
+          @sendInput="sendInput"
         />
       </DefaultModal>
       <div class="text-wrapper">
@@ -53,11 +59,11 @@
           />
         </div>
         <div class="content">
-          <div class="paragraph" v-html="post.content" />
+          <div class="paragraph" v-html="POST.content" />
           <div class="like-wrapper">
             <div class="like-wrapper__top">
               <div class="top__paragraph">{{ likedParagraph }}</div>
-              <div class="top__liked-count">{{ post.like_count }}</div>
+              <div class="top__liked-count">{{ POST.like_count }}</div>
               <img
                 class="top__liked-button"
                 :src="require(`@/assets/svg/flitto/${likedButton}`)"
@@ -76,28 +82,43 @@
 <script>
 import TagContent from '@/components/content/TagContent'
 import StatusContent from '@/components/content/StatusContent'
-import { postObj } from '@/api/test'
+import { postObj, userObj } from '@/api/test'
 import SimpleModal from '@/components/modal/SimpleModal'
 import DefaultModal from '@/components/modal/DefaultModal'
+import RejectModal from '@/components/modal/RejectModal'
 
 export default {
   name: 'ContentShowPage',
-  components: { DefaultModal, SimpleModal, StatusContent, TagContent },
+  components: {
+    DefaultModal,
+    SimpleModal,
+    StatusContent,
+    TagContent,
+    RejectModal,
+  },
   data() {
     return {
-      post: { ...postObj },
+      POST: { ...postObj },
+      USER: { ...userObj },
       tags: ['frontend', 'react', 'vue'],
       likedParagraph:
         '이 글이 도움이 되었다면 플리토 로고를 눌러주세요! \n 더 좋은 글을 발행하는 데 힘이 됩니다.',
       likedButton: 'flitto_logo.svg',
-      modalObj: {
+      simpleModalObj: {
         isShow: false,
-        isBoth: false,
+        buttonCount: 2,
         text: 'TEXT',
         confirm: '확인',
         yes: '예',
         no: '아니오',
       },
+      rejectModalObj: {
+        isReject: true, // true: 거절 사유, false: 이의제기 사유
+        isShow: false,
+        isInput: false,
+        content: '',
+      },
+      rejectInput: '',
     }
   },
   methods: {
@@ -114,19 +135,48 @@ export default {
       if (this.post.is_like) this.likedButton = 'flitto_logo.svg'
       else this.likedButton = 'flitto_logo_gray.svg'
     },
-    confirmModal() {
-      this.modalObj.isShow = false
+    rejectAction() {
+      this.rejectModalObj.isShow = true
+      this.rejectModalObj.isReject = true // true= 거절 사유, false= 이의제기 사유
+      switch (this.USER.user_type) {
+        case 'F':
+          this.rejectModalObj.isInput = false
+          this.rejectModalObj.content = this.POST.reject_content
+          break
+        case 'A':
+          this.rejectModalObj.isInput = true
+          break
+      }
     },
-    actionByButton(_action) {
-      console.log(_action)
-      // if (_action === 'remove') {
-      //   this.modalObj.text = '삭제하시겠습니까?'
-      //   this.modalObj.isBoth = true
-      // }
-      this.modalObj.isShow = true
+    claimAction() {
+      this.rejectModalObj.isShow = true
+      this.rejectModalObj.isReject = false
+      switch (this.USER.user_type) {
+        case 'F':
+          this.rejectModalObj.isInput = true
+          break
+        case 'A':
+          this.rejectModalObj.isInput = false
+          this.rejectModalObj.content = this.POST.claim_content
+          break
+      }
+    },
+    removeAction() {
+      this.simpleModalObj.isShow = true
+      this.simpleModalObj.text = '삭제하시겠습니까?'
+      this.simpleModalObj.buttonCount = 1
+    },
+    confirmModal() {
+      console.log('삭제 로직 필요')
+      this.simpleModalObj.isShow = false
     },
     closeModal() {
-      this.modalObj.isShow = false
+      if (this.simpleModalObj.isShow) this.simpleModalObj.isShow = false
+      if (this.rejectModalObj.isShow) this.rejectModalObj.isShow = false
+    },
+    sendInput() {
+      console.log('F일 때 이의 내용 send, A일 때 거절 내용 send 로직 필요')
+      this.rejectInput = ''
     },
   },
 }
@@ -228,6 +278,9 @@ export default {
     padding-right: 0.5em;
     cursor: pointer;
     font-weight: 700;
+    & a {
+      color: $normal-blue;
+    }
   }
   &__remove {
     cursor: pointer;

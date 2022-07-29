@@ -8,7 +8,7 @@ const postObj = {
   updated_at: '2022.06.16',
   published_at: '2022.06.16',
   approver_user_id: 3,
-  status: 'P',
+  status: 'R',
   view_count: 34,
   like_count: 100,
   is_like: false,
@@ -20,12 +20,12 @@ const postObj = {
 const userObj = {
   created_at: '2022.06.16',
   updated_at: '2022.06.16',
-  displayed_name: 'HYK',
+  displayed_name: 'hyoeun.kim',
   email: 'hyk@flitto.com',
   photo_url: 'photo_url',
   self_description: '안녕하세요',
   user_id: 1,
-  user_type: 'A',
+  user_type: 'F',
 }
 
 export { postObj, userObj }

@@ -66,12 +66,16 @@ import InputBasic from '@/components/basic/InputBasic'
 import TagContent from '@/components/content/TagContent'
 import EditorComponent from '@/components/EditorComponent.vue'
 
-// const WRITER_USER_ID = 'dkkim0122@gmail.com'
-// const THUMBNAIL = 'thumbnail_url'
-
 export default {
   name: 'ContentPage',
   components: { TagContent, InputBasic, ButtonContent, EditorComponent },
+  asyncData({ params, error }) {
+    if (params.content_id === undefined) {
+      console.log('New Content Edit!')
+    } else if (isNaN(params.content_id)) {
+      error(404)
+    }
+  },
   data() {
     return {
       title: '',

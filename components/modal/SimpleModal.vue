@@ -3,11 +3,11 @@
     <p class="modal-text">{{ modalObj.text }}</p>
     <div class="button-wrapper">
       <ButtonContent
-        :value="modalObj.isBoth ? modalObj.yes : modalObj.confirm"
+        :value="modalObj.buttonCount === 2 ? modalObj.yes : modalObj.confirm"
         @click="confirm"
       />
       <ButtonContent
-        v-if="modalObj.isBoth"
+        v-if="modalObj.buttonCount === 2"
         :value="modalObj.no"
         @click="close"
       />
@@ -23,6 +23,7 @@ export default {
   props: {
     modalObj: {
       type: Object,
+      require: true,
     },
   },
   data() {

@@ -12,6 +12,20 @@ const postObj = {
   view_count: 34,
   like_count: 100,
   is_like: false,
+  reject_content: '정보에 오류가 있는 것 같으니 확인 바랍니다.',
+  claim_content:
+    '최신 내용으로 작성하여 기존 내용과 차이가 있는 부분이 있습니다. 정보의 오류는 아니니 다시 고려해주시면 감사하겠습니다.',
 }
 
-export { postObj }
+const userObj = {
+  created_at: '2022.06.16',
+  updated_at: '2022.06.16',
+  displayed_name: 'HYK',
+  email: 'hyk@flitto.com',
+  photo_url: 'photo_url',
+  self_description: '안녕하세요',
+  user_id: 1,
+  user_type: 'A',
+}
+
+export { postObj, userObj }

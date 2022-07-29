@@ -2,13 +2,12 @@
   <div>
     <client-only class="container">
       <ckeditor
-        :value="editorData"
+        :value="value"
         :editor="editor"
         :config="editorConfig"
         @input="(event) => $emit('input', event)"
       ></ckeditor>
     </client-only>
-    <div v-html="editorData"></div>
   </div>
 </template>
 
@@ -30,7 +29,7 @@ export default {
   name: 'EditorComponent',
   components: { ckeditor: CKEditor.component },
   props: {
-    editorData: {
+    value: {
       type: String,
       default: '',
     },

@@ -1,6 +1,5 @@
 <template>
   <div class="wrap">
-    <HeaderComponent />
     <div class="content-wrapper">
       <div class="content-top-wrapper">
         <div class="title-wrapper">
@@ -22,13 +21,28 @@
             />
           </div>
           <div class="action-wrapper">
-            <p class="action__reject">거절사유</p>
-            <p class="action__claim">이의제기</p>
-            <p class="action__modify">수정하기</p>
-            <p class="action__remove">삭제하기</p>
+            <p class="action__reject" @click="actionByButton('reject')">
+              거절사유
+            </p>
+            <p class="action__claim" @click="actionByButton('claim')">
+              이의제기
+            </p>
+            <p class="action__modify" @click="actionByButton('modify')">
+              수정하기
+            </p>
+            <p class="action__remove" @click="actionByButton('remove')">
+              삭제하기
+            </p>
           </div>
         </div>
       </div>
+      <DefaultModal v-if="modalObj.isShow" @scroll.prevent>
+        <SimpleModal
+          :modal-obj="modalObj"
+          @confirm="confirmModal"
+          @close="closeModal"
+        />
+      </DefaultModal>
       <div class="text-wrapper">
         <div class="tags">
           <TagContent
@@ -39,7 +53,7 @@
           />
         </div>
         <div class="content">
-          <div class="paragraph">{{ post.content }}</div>
+          <div class="paragraph" v-html="post.content" />
           <div class="like-wrapper">
             <div class="like-wrapper__top">
               <div class="top__paragraph">{{ likedParagraph }}</div>
@@ -56,7 +70,6 @@
         </div>
       </div>
     </div>
-    <FooterComponent />
   </div>
 </template>
 
@@ -64,10 +77,12 @@
 import TagContent from '@/components/content/TagContent'
 import StatusContent from '@/components/content/StatusContent'
 import { postObj } from '@/api/test'
+import SimpleModal from '@/components/modal/SimpleModal'
+import DefaultModal from '@/components/modal/DefaultModal'
 
 export default {
   name: 'ContentShowPage',
-  components: { StatusContent, TagContent },
+  components: { DefaultModal, SimpleModal, StatusContent, TagContent },
   data() {
     return {
       post: { ...postObj },
@@ -75,6 +90,14 @@ export default {
       likedParagraph:
         '이 글이 도움이 되었다면 플리토 로고를 눌러주세요! \n 더 좋은 글을 발행하는 데 힘이 됩니다.',
       likedButton: 'flitto_logo.svg',
+      modalObj: {
+        isShow: false,
+        isBoth: false,
+        text: 'TEXT',
+        confirm: '확인',
+        yes: '예',
+        no: '아니오',
+      },
     }
   },
   methods: {
@@ -91,11 +114,28 @@ export default {
       if (this.post.is_like) this.likedButton = 'flitto_logo.svg'
       else this.likedButton = 'flitto_logo_gray.svg'
     },
+    confirmModal() {
+      this.modalObj.isShow = false
+    },
+    actionByButton(_action) {
+      console.log(_action)
+      // if (_action === 'remove') {
+      //   this.modalObj.text = '삭제하시겠습니까?'
+      //   this.modalObj.isBoth = true
+      // }
+      this.modalObj.isShow = true
+    },
+    closeModal() {
+      this.modalObj.isShow = false
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.wrap {
+  height: 100%;
+}
 .content-wrapper {
   min-height: calc(100vh - 240px);
   padding: 1em 2em;

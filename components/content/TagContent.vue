@@ -43,13 +43,13 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 7em;
-  height: 2.5em;
+  padding: 0.5rem 1.5rem 0.5rem 1.2rem;
   border: 1px solid $deep-gray;
   border-radius: 0.8em;
   position: relative;
   &__title {
     color: $black;
+    word-break: break-word;
   }
   &__cancel-img {
     position: absolute;

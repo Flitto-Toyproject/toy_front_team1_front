@@ -16,16 +16,16 @@
           <div class="content-additional__items">
             <strong class="content-additional__title">Tags</strong>
             <InputBasic
-              v-model="inputTag"
+              v-model="tagInput"
               :placeholder="'태그를 입력해주세요'"
               :add-button="true"
               :type="'text'"
-              @add="addTag(inputTag)"
+              @add="addTag()"
             />
           </div>
           <div class="content-additional__tags">
             <TagContent
-              v-for="tag in tags"
+              v-for="tag in tagList"
               :key="tag"
               :is-editing="true"
               class="content-additional__tag-content"
@@ -34,15 +34,17 @@
             />
           </div>
         </div>
-        <div class="content-additional__items">
-          <strong class="content-additional__title">Thumbnail</strong>
-          <InputBasic
-            v-model="thumbnail"
-            :placeholder="'썸네일 URL을 입력해주세요'"
-            :add-button="true"
-            :type="'text'"
-          />
-          <div class="content-additional__preview" />
+        <div class="content-additional__thumbnail-wrapper">
+          <div class="content-additional__items">
+            <strong class="content-additional__title">Thumbnail</strong>
+            <InputBasic
+              v-model="thumbnail"
+              :placeholder="'썸네일 URL을 입력해주세요'"
+              :add-button="true"
+              :type="'text'"
+            />
+            <div class="content-additional__preview" />
+          </div>
         </div>
         <div class="button-wrapper">
           <ButtonContent
@@ -50,7 +52,11 @@
             :is-major="true"
             @click="publishContent"
           />
-          <ButtonContent :value="'임시저장'" @click="saveContent" />
+          <ButtonContent
+            v-if="contentStatus === 'E'"
+            :value="'임시저장'"
+            @click="saveContent"
+          />
           <ButtonContent :value="'취소'" @click="cancelContent" />
         </div>
       </div>
@@ -89,24 +95,37 @@ export default {
 
     const title = editingData?.title ? editingData.title : ''
     const editorInput = editingData?.content ? editingData.content : ''
-    const tags = editingData?.tags ? editingData.tags : []
+    const tagList = editingData?.tag_list ? editingData.tag_list : []
     const thumbnail = editingData?.thumbnail ? editingData.thumbnail : ''
-    const inputTag = editingData?.inputTag ? editingData.inputTag : ''
+    const contentStatus = editingData?.status ? editingData.status : 'E'
 
-    return { isNewContent, title, editorInput, tags, thumbnail, inputTag }
+    return {
+      isNewContent,
+      title,
+      editorInput,
+      tagList,
+      thumbnail,
+      contentStatus,
+    }
+  },
+  data() {
+    return {
+      tagInput: '',
+    }
   },
   methods: {
     removeTag(_tag) {
-      const tag = this.tags.filter((tag) => tag !== _tag)
-      this.tags = tag
+      const tag = this.tagList.filter((tag) => tag !== _tag)
+      this.tagList = tag
     },
-    addTag(_inputTag) {
-      const isEqual = this.tags.find((tag) => tag === _inputTag)
+    addTag() {
+      const isEqual = this.tagList.find((tag) => tag === this.tagInput)
       if (isEqual) {
         alert('같은 내용의 태그를 또 입력할 수 없습니다.')
         return
       }
-      this.tags.push(_inputTag)
+      this.tagList.push(this.tagInput)
+      this.tagInput = ''
     },
     updateTitle(e) {
       this.title = e.target.value
@@ -117,7 +136,7 @@ export default {
       //   writer_user_id: WRITER_USER_ID,
       //   title: this.title,
       //   content: this.editorInput,
-      //   tags: this.tags,
+      //   tagList: this.tagList,
       //   thumnail: THUMBNAIL,
       //   status: 'W', // 발행 : editing -> waiting
       // }
@@ -131,7 +150,7 @@ export default {
       //   writer_user_id: WRITER_USER_ID,
       //   title: this.title,
       //   content: this.editorInput,
-      //   tags: this.tags,
+      //   tagList: this.tagList,
       //   thumnail: THUMBNAIL,
       //   status: 'E', // 임시저장 : editing
       // }
@@ -157,13 +176,26 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 70rem;
-  min-height: 90vh;
-  padding: 1rem 2rem;
+
+  width: 60rem;
+  padding: 1rem 1.5rem;
+  @include tablet {
+    width: 40rem;
+  }
+  @include over_desktop {
+    width: 70rem;
+    padding: 1rem 0;
+  }
 }
 .title-input {
   width: 55rem;
   margin: 1rem;
+  @include tablet {
+    width: 40rem;
+  }
+  @include over_desktop {
+    width: 70rem;
+  }
   &__form {
     border: 0.1rem solid $light-gray;
     border-radius: 0.3rem;
@@ -176,11 +208,13 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: calc(100vh - 180px);
-  padding: 1em 2.5em;
+
+  width: 100%;
+  padding: 1em 1em;
   &__tags-wrapper {
     display: flex;
     flex-direction: column;
+    margin: 1.5rem 0;
   }
   &__tags {
     display: flex;
@@ -191,6 +225,9 @@ export default {
     display: flex;
     flex-direction: row;
     margin: 0.5em 1em 0px 0px;
+  }
+  &__thumbnail-wrapper {
+    margin: 1.5rem 0;
   }
   &__title {
     color: $deep-blue;
@@ -215,6 +252,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  margin-top: 2rem;
   :not(:first-child) {
     margin-left: 1em;
   }

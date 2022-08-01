@@ -217,11 +217,18 @@ export default {
   justify-content: space-between;
   border-bottom: 1px solid $deep-gray;
   padding: 1em 0px 0.8em 0px;
+  @include tablet {
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 .profile-wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
+  @include tablet {
+    margin-bottom: 1rem;
+  }
   &__profile-img {
     width: 2em;
     height: 2em;

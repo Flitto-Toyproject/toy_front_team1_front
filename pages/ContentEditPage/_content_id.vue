@@ -66,31 +66,34 @@ import InputBasic from '@/components/basic/InputBasic'
 import TagContent from '@/components/content/TagContent'
 import EditorComponent from '@/components/EditorComponent.vue'
 
-// const WRITER_USER_ID = 'dkkim0122@gmail.com'
-// const THUMBNAIL = 'thumbnail_url'
-
 export default {
   name: 'ContentPage',
   components: { TagContent, InputBasic, ButtonContent, EditorComponent },
-  data() {
-    return {
-      title: '',
-      editorInput: '',
-      tags: [
-        'frontend',
-        'vue.js',
-        'nuxt.js',
-        'javascript',
-        'html5',
-        'css5',
-        'java',
-        'backend',
-        'nest.js',
-        'typescript',
-      ],
-      thumbnail: '',
-      inputTag: '',
+  asyncData({ params, error }) {
+    let isNewContent
+    let editingData = null
+
+    if (params.content_id === undefined) {
+      // 새 컨텐츠 작성
+      isNewContent = true
+    } else if (isNaN(params.content_id)) {
+      // 에러 페이지, 추후 content_id GET 실패 시 에러 호출로 수정 필요
+      error(404)
+    } else {
+      // 기존 컨텐츠 작성
+      isNewContent = false
+
+      const { postObj } = require('@/api/test.js')
+      editingData = postObj
     }
+
+    const title = editingData?.title ? editingData.title : ''
+    const editorInput = editingData?.content ? editingData.content : ''
+    const tags = editingData?.tags ? editingData.tags : []
+    const thumbnail = editingData?.thumbnail ? editingData.thumbnail : ''
+    const inputTag = editingData?.inputTag ? editingData.inputTag : ''
+
+    return { isNewContent, title, editorInput, tags, thumbnail, inputTag }
   },
   methods: {
     removeTag(_tag) {

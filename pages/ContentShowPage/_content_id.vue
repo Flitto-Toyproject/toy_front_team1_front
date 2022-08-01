@@ -96,6 +96,11 @@ export default {
     TagContent,
     RejectModal,
   },
+  asyncData({ params, error }) {
+    if (isNaN(params.content_id)) {
+      error(404)
+    }
+  },
   data() {
     return {
       POST: { ...postObj },

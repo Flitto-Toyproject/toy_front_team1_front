@@ -1,7 +1,7 @@
 <template>
   <div class="input-basic">
     <input
-      v-model="value"
+      :value="value"
       :type="type"
       class="input-basic__input"
       :placeholder="placeholder"
@@ -37,18 +37,17 @@ export default {
       default: 'text',
       required: true,
     },
-  },
-  data() {
-    return {
-      value: '',
-    }
+    value: {
+      type: String,
+      required: true,
+    },
   },
   methods: {
-    updateValue() {
-      this.$emit('input', this.value)
+    updateValue(e) {
+      this.$emit('input', e.target.value)
     },
     addValue() {
-      this.$emit('add', this.value)
+      this.$emit('add')
     },
   },
 }

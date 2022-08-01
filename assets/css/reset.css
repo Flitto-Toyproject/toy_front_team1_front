@@ -100,3 +100,17 @@ input {
   word-wrap: break-word;
   word-break: break-word;
 }
+
+@media screen and (max-width: 768px) { /* tablet */
+  .ck {
+    width: 40rem;
+  }
+}
+@media screen and (min-width: 1440px) { /* desktop */
+  .ck {
+    width: 70rem;
+  }
+  .ck-editor__editable {
+    height: 40rem;
+  }
+}

@@ -43,7 +43,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1.2rem;
+  padding: 0.5rem 1.5rem 0.5rem 1.2rem;
   border: 1px solid $deep-gray;
   border-radius: 0.8em;
   position: relative;

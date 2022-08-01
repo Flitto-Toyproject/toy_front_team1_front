@@ -34,15 +34,17 @@
             />
           </div>
         </div>
-        <div class="content-additional__items">
-          <strong class="content-additional__title">Thumbnail</strong>
-          <InputBasic
-            v-model="thumbnail"
-            :placeholder="'썸네일 URL을 입력해주세요'"
-            :add-button="true"
-            :type="'text'"
-          />
-          <div class="content-additional__preview" />
+        <div class="content-additional__thumbnail-wrapper">
+          <div class="content-additional__items">
+            <strong class="content-additional__title">Thumbnail</strong>
+            <InputBasic
+              v-model="thumbnail"
+              :placeholder="'썸네일 URL을 입력해주세요'"
+              :add-button="true"
+              :type="'text'"
+            />
+            <div class="content-additional__preview" />
+          </div>
         </div>
         <div class="button-wrapper">
           <ButtonContent
@@ -91,9 +93,13 @@ export default {
     const editorInput = editingData?.content ? editingData.content : ''
     const tags = editingData?.tags ? editingData.tags : []
     const thumbnail = editingData?.thumbnail ? editingData.thumbnail : ''
-    const inputTag = editingData?.inputTag ? editingData.inputTag : ''
 
-    return { isNewContent, title, editorInput, tags, thumbnail, inputTag }
+    return { isNewContent, title, editorInput, tags, thumbnail }
+  },
+  data() {
+    return {
+      inputTag: '',
+    }
   },
   methods: {
     removeTag(_tag) {
@@ -158,7 +164,6 @@ export default {
   justify-content: center;
   align-items: center;
   max-width: 70rem;
-  min-height: 90vh;
   padding: 1rem 2rem;
 }
 .title-input {
@@ -176,11 +181,13 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: calc(100vh - 180px);
+  width: 100%;
+  // height: calc(100vh - 180px);
   padding: 1em 2.5em;
   &__tags-wrapper {
     display: flex;
     flex-direction: column;
+    margin: 1.5rem 0;
   }
   &__tags {
     display: flex;
@@ -191,6 +198,9 @@ export default {
     display: flex;
     flex-direction: row;
     margin: 0.5em 1em 0px 0px;
+  }
+  &__thumbnail-wrapper {
+    margin: 1.5rem 0;
   }
   &__title {
     color: $deep-blue;
@@ -215,6 +225,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 2rem;
   :not(:first-child) {
     margin-left: 1em;
   }

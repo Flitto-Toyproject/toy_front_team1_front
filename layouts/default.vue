@@ -2,7 +2,7 @@
   <div class="layout-container">
     <HeaderComponent />
     <Nuxt></Nuxt>
-    <FooterComponent />
+    <FooterComponent class="footer" />
   </div>
 </template>
 
@@ -15,9 +15,26 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .layout-container {
   display: flex;
   flex-direction: column;
+
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 9rem;
+  @include tablet {
+    padding-bottom: 14rem;
+  }
+}
+
+.footer {
+  height: 9rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  @include tablet {
+    height: 14rem;
+  }
 }
 </style>

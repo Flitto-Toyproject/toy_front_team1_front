@@ -9,15 +9,21 @@
       <p class="header-left__title">기술블로그</p>
     </div>
     <div class="header-right">
-      <InputBasic :placeholder="'검색할 내용을 입력해주세요'" :type="'text'" />
+      <InputBasic
+        v-model="keyword"
+        :placeholder="'검색할 내용을 입력해주세요'"
+        :type="'text'"
+        :add-button="false"
+      />
       <img
         class="header-right__search-icon"
         src="@/assets/svg/header/search_icon.svg"
         alt="search_icon"
+        @click="searchKeyword"
       />
-      <strong v-if="isLogin" class="header-right__login" @click="login"
-        >로그인</strong
-      >
+      <strong v-if="isLogin" class="header-right__login" @click="login">
+        로그인
+      </strong>
       <div v-else class="profile-wrapper" @click="goToMypage">
         <div class="profile-wrapper__profile-img" />
         <div class="profile-wrapper__alert" />
@@ -34,6 +40,7 @@ export default {
   data() {
     return {
       isLogin: true,
+      keyword: '',
     }
   },
   methods: {
@@ -42,6 +49,9 @@ export default {
     },
     goToTeckHome() {},
     goToMypage() {},
+    searchKeyword() {
+      // this.$nuxt.$emit('keyword', this.keyword)
+    },
   },
 }
 </script>

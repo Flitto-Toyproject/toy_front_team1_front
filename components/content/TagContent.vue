@@ -1,5 +1,5 @@
 <template>
-  <div class="tag">
+  <div class="tag" :class="{ 'tag--not-editing': !isEditing }">
     <div class="tag__title">{{ tag }}</div>
     <img
       v-if="isEditing"
@@ -47,6 +47,7 @@ export default {
   border: 1px solid $deep-gray;
   border-radius: 0.8em;
   position: relative;
+
   &__title {
     color: $black;
     word-break: break-word;
@@ -56,6 +57,11 @@ export default {
     top: 0.2em;
     right: 0.1em;
     cursor: pointer;
+  }
+  &--not-editing {
+    padding: 0.2em 1em;
+    font-size: 0.8em;
+    color: $deep-gray;
   }
 }
 </style>

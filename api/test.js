@@ -24,7 +24,7 @@ const userObj = {
   updated_at: '2022.06.16',
   displayed_name: 'hyoeun.kim',
   email: 'hyk@flitto.com',
-  photo_url: 'photo_url',
+  photo_url: 'img/vue_logo.png',
   self_description: '안녕하세요',
   user_id: 1,
   user_type: 'F',

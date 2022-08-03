@@ -30,6 +30,7 @@ export default {
 
 .footer {
   height: 9rem;
+  width: 100%;
   position: absolute;
   bottom: 0;
   @include tablet {

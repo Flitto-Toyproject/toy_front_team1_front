@@ -1,5 +1,8 @@
 <template>
-  <div class="tag">
+  <div
+    class="tag"
+    :class="{ 'tag--not-editing': !isEditing, 'tag--is-in-list': isInList }"
+  >
     <div class="tag__title">{{ tag }}</div>
     <img
       v-if="isEditing"
@@ -25,6 +28,10 @@ export default {
       default: '',
       required: true,
     },
+    isInList: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {}
@@ -47,6 +54,7 @@ export default {
   border: 1px solid $deep-gray;
   border-radius: 0.8em;
   position: relative;
+
   &__title {
     color: $black;
     word-break: break-word;
@@ -56,6 +64,16 @@ export default {
     top: 0.2em;
     right: 0.1em;
     cursor: pointer;
+  }
+  &--not-editing {
+    padding: 0.2em 1em;
+    font-size: 0.8em;
+    color: $deep-gray;
+  }
+
+  &--is-in-list {
+    padding: 0.1em 0.8em;
+    font-size: 0.6em;
   }
 }
 </style>

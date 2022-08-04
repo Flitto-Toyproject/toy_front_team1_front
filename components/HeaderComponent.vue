@@ -47,10 +47,12 @@ export default {
     login() {
       this.isLogin = !this.isLogin
     },
-    goToTeckHome() {},
+    goToTeckHome() {
+      this.$router.push('/')
+    },
     goToMypage() {},
     searchKeyword() {
-      // this.$nuxt.$emit('keyword', this.keyword)
+      this.$nuxt.$emit('keyword', this.keyword)
     },
   },
 }
@@ -77,7 +79,6 @@ header {
     width: 10em;
   }
   &__title {
-    font-family: 'NanumGothic-Regular';
     font-weight: 700;
     font-size: 1.75em;
     color: $black;

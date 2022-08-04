@@ -1,17 +1,13 @@
 <template>
-  <div class="test">안녕하세요</div>
+  <MainPage />
 </template>
 
 <script>
+import MainPage from '@/pages/MainPage'
 export default {
   name: 'IndexPage',
+  components: { MainPage },
 }
 </script>
 
-<style lang="scss" scoped>
-.test {
-  width: 300px;
-  height: 300px;
-  background-color: $black;
-}
-</style>
+<style lang="scss" scoped></style>

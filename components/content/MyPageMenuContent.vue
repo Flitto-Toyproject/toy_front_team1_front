@@ -42,6 +42,7 @@ export default {
 <style lang="scss" scoped>
 .menu {
   display: flex;
+  margin-right: 1rem;
   cursor: pointer;
   font: {
     family: 'HelveticaNeue-Medium';

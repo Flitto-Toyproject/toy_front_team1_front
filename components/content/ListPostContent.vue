@@ -7,7 +7,9 @@
       />
     </div>
     <div class="post-content-wrap">
-      <strong class="post-title">{{ postObj.title }}</strong>
+      <p>
+        <strong class="post-title">{{ postObj.title }}</strong>
+      </p>
       <div class="post-content">{{ postObj.content }}</div>
       <div class="post-user-wrap">
         <img class="post-user__img" />
@@ -20,6 +22,7 @@
           :key="tag"
           class="tag-content"
           :tag="tag"
+          :isInList="true"
         />
       </div>
     </div>
@@ -59,29 +62,30 @@ export default {
 
   @include tablet {
     flex-direction: column;
+    align-items: center;
   }
 }
 
 .post-skeleton {
-  width: 15em;
-  height: 10em;
+  width: 10em;
+  height: 7em;
   background-color: $deep-gray;
   margin-right: 2rem;
   border-radius: 1em;
   position: relative;
 
-  flex: 0 15em;
+  flex: 0 10em;
 
   &__flitto-logo {
-    width: 1.5em;
-    height: 1.5em;
+    width: 1em;
+    height: 1em;
     position: absolute;
     bottom: 0.7em;
     right: 0.7em;
   }
 
   @include tablet {
-    width: 100%;
+    width: 40%;
     margin-right: 0;
 
     display: flex;
@@ -96,10 +100,14 @@ export default {
   margin: 0.5em 0;
 
   flex: 1;
+
+  @include tablet {
+    width: 40%;
+  }
 }
 
 .post-title {
-  font-size: 1.5em;
+  font-size: 1em;
   color: $black;
 
   cursor: pointer;
@@ -111,6 +119,8 @@ export default {
 .post-content {
   color: $deep-gray;
   margin: 0.5em 0px;
+  font-size: 0.7em;
+
   white-space: normal;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -125,12 +135,16 @@ export default {
   }
   &__name {
     color: $black;
-    font-weight: 500;
+
     margin-left: 0.5em;
+    font: {
+      size: 0.7em;
+      weight: 500;
+    }
   }
   &__default-img {
-    width: 2em;
-    height: 2em;
+    width: 1em;
+    height: 1em;
     background-color: $deep-gray;
     border-radius: 2em;
   }

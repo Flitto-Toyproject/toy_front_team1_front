@@ -65,6 +65,10 @@ export default {
     &--focus {
       background-color: $normal-blue;
     }
+
+    @include tablet {
+      display: none;
+    }
   }
 }
 </style>

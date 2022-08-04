@@ -59,13 +59,22 @@
           <TitleBasic title-content="Publication" />
         </div>
         <div class="result__menu">
-          <MyPageMenuContent
-            v-for="menu in menuArr"
-            :key="menu"
-            :menu="menu"
-            :content-count="contentCount"
-            :focused="selectedMenu === menu"
-            @click="selectMenu(menu)"
+          <div class="result__menu-content">
+            <MyPageMenuContent
+              v-for="menu in menuArr"
+              :key="menu"
+              :menu="menu"
+              :content-count="contentCount"
+              :focused="selectedMenu === menu"
+              @click="selectMenu(menu)"
+            />
+          </div>
+        </div>
+        <div class="my-contents">
+          <ListPostContent
+            v-for="postObj in postsArrSliced"
+            :key="postObj.id"
+            :post-obj="postObj"
           />
         </div>
       </div>
@@ -76,11 +85,12 @@
 <script>
 import TitleBasic from '@/components/basic/TitleBasic.vue'
 import MyPageMenuContent from '@/components/content/MyPageMenuContent.vue'
-import { userObj } from '@/api/test'
+import ListPostContent from '@/components/content/ListPostContent.vue'
+import { userObj, postsArr } from '@/api/test'
 
 export default {
   name: 'MyPage',
-  components: { TitleBasic, MyPageMenuContent },
+  components: { TitleBasic, MyPageMenuContent, ListPostContent },
   asyncData() {
     const {
       displayed_name: nickName,
@@ -88,8 +98,8 @@ export default {
       photo_url: photoUrl,
       user_type: userType,
     } = userObj
-
-    return { nickName, email, photoUrl, userType }
+    const postsArrSliced = postsArr.slice(0, 3)
+    return { nickName, email, photoUrl, userType, postsArrSliced }
   },
   data() {
     return {
@@ -130,7 +140,7 @@ export default {
   justify-content: center;
 
   &__wrap {
-    width: 70%;
+    width: 42rem;
   }
 
   &__header {
@@ -147,7 +157,7 @@ export default {
 
 .profile {
   &__wrap {
-    height: 13rem;
+    height: 10rem;
     margin: 0.5rem 0 2rem 0;
     padding: 1rem;
     border: 0.1rem solid $deep-gray;
@@ -159,9 +169,9 @@ export default {
   }
 
   &__img {
-    height: 10rem;
-    width: 10rem;
-    border-radius: 10rem;
+    height: 8rem;
+    width: 8rem;
+    border-radius: 8rem;
   }
 
   &__edit-btn,
@@ -224,6 +234,16 @@ export default {
 
 .result {
   &__menu {
+    padding-bottom: 0.5rem;
+    border-bottom: 0.05rem solid $deep-gray;
+
+    @include tablet {
+      width: 70%;
+      margin: 0 auto;
+    }
+  }
+
+  &__menu-content {
     width: 90%;
 
     display: flex;

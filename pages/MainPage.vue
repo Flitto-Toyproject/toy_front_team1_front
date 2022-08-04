@@ -2,14 +2,19 @@
   <div class="container">
     <div class="wrap">
       <div class="content-wrap">
+        <div v-if="keyword" class="search-wrap">
+          Searched For : <span class="search-wrap__keyword">{{ keyword }}</span>
+        </div>
         <div class="display-icons">
           <img
             class="display-icons__icon"
+            alt="display-grid-icon"
             :src="require(`@/assets/svg/common/${displayIcons.grid}`)"
             @click="selectDisplay('grid')"
           />
           <img
             class="display-icons__icon"
+            alt="display-list-icon"
             :src="require(`@/assets/svg/common/${displayIcons.list}`)"
             @click="selectDisplay('list')"
           />
@@ -30,8 +35,13 @@
             />
           </div>
         </div>
-
-        <div class="pagination">페이지네이션</div>
+        <PaginationBasic
+          :size="SIZE"
+          :max="MAX"
+          :total="total"
+          :current-page="currentPage"
+          @paginate="paginate"
+        />
       </div>
       <div class="tags-list">
         <div class="tags-list__border-wrapper">
@@ -60,10 +70,18 @@
 import { tagArr, postsArr } from '@/api/test'
 import GridPostContent from '@/components/content/GridPostContent.vue'
 import ListPostContent from '@/components/content/ListPostContent.vue'
+import PaginationBasic from '@/components/basic/PaginationBasic'
 
 export default {
-  name: 'TempMainPage',
-  components: { ListPostContent, GridPostContent },
+  name: 'MainPage',
+  components: { PaginationBasic, ListPostContent, GridPostContent },
+  props: {
+    keyword: {
+      type: [Number, String],
+      default: '',
+      required: false,
+    },
+  },
   data() {
     return {
       tags: [...tagArr],
@@ -73,22 +91,45 @@ export default {
         list: 'list.svg',
       },
       selectedTag: '',
-      isShowingGrid: false,
+      isShowingGrid: true,
+      SIZE: 9, // TODO: constant 처리
+      MAX: 3,
+      total: 0,
+      currentPage: 1,
     }
+  },
+  created() {
+    this.total = postsArr.length
   },
   methods: {
     searchByTag(_tag) {
       this.selectedTag = _tag
     },
     selectDisplay(_display) {
-      if (_display === 'grid') {
-        this.displayIcons.grid = 'grid_selected.svg'
-        this.displayIcons.list = 'list.svg'
-        this.isShowingGrid = true
-      } else if (_display === 'list') {
-        this.displayIcons.grid = 'grid.svg'
-        this.displayIcons.list = 'list_selected.svg'
-        this.isShowingGrid = false
+      switch (_display) {
+        case 'grid':
+          this.displayIcons.grid = 'grid_selected.svg'
+          this.displayIcons.list = 'list.svg'
+          this.isShowingGrid = true
+          break
+        case 'list':
+          this.displayIcons.grid = 'grid.svg'
+          this.displayIcons.list = 'list_selected.svg'
+          this.isShowingGrid = false
+          break
+      }
+    },
+    paginate(_page) {
+      switch (_page) {
+        case 'prev':
+          this.currentPage--
+          break
+        case 'next':
+          this.currentPage++
+          break
+        default:
+          this.currentPage = _page
+          break
       }
     },
   },
@@ -114,12 +155,25 @@ export default {
   justify-content: flex-start;
 }
 
+.search-wrap {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: $deep-blue;
+  border-bottom: 1px solid $deep-gray;
+  padding-bottom: 0.3em;
+  &__keyword {
+    font-size: 1em;
+    font-weight: 700;
+    color: $normal-blue;
+  }
+}
+
 .display-icons {
   display: flex;
   flex-direction: row;
   justify-content: end;
   align-items: center;
-  margin-bottom: 1em;
+  margin: 1em 0;
   :first-child {
     margin-right: 0.5em;
   }

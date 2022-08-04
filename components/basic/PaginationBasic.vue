@@ -41,7 +41,7 @@ export default {
       type: Number,
       required: true,
     },
-    totalPage: {
+    total: {
       type: Number,
       required: true,
     },
@@ -54,7 +54,7 @@ export default {
     return {
       pages: [],
       startIndex: 1,
-      endIndex: 3,
+      endIndex: 1,
       isDisplayPrevButton: true,
       isDisplayNextButton: true,
     }
@@ -69,13 +69,15 @@ export default {
   },
   methods: {
     getPages() {
+      const newPages = []
+      const totalPage = Math.ceil(this.total / this.size)
+
       this.startIndex =
         Math.ceil(this.currentPage / this.max - 1) * this.max + 1
       this.endIndex =
-        this.startIndex + this.max > this.totalPage
-          ? this.totalPage
+        this.startIndex + this.max > totalPage
+          ? totalPage
           : this.startIndex + this.max - 1
-      const newPages = []
       for (let i = this.startIndex; i <= this.endIndex; i++) {
         newPages.push(i)
       }
@@ -85,7 +87,7 @@ export default {
       this.isDisplayPrevButton = !(
         this.startIndex === 1 && this.currentPage === 1
       )
-      this.isDisplayNextButton = !(this.pages.length < this.max)
+      this.isDisplayNextButton = this.currentPage !== totalPage
     },
     paginate(_page) {
       this.$emit('paginate', _page)
@@ -100,6 +102,7 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin: 1.5em 0;
   &__page-item {
     display: flex;
     justify-content: center;

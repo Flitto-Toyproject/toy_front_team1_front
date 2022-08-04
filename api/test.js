@@ -122,16 +122,7 @@ const postsArr = [
     like_count: 100,
     thumbnail_url: '',
     writer_user_photo_url: '',
-    tag_list: [
-      'Frontend',
-      'Vue.js',
-      'FrontendFrontendFrontend',
-      'Frontend',
-      'Frontend',
-      'Frontend',
-      'Frontend',
-      'Vue.js',
-    ],
+    tag_list: ['Frontend', 'Vue.js', 'FrontendFrontendFrontend'],
   },
   {
     post_id: 7,
@@ -268,14 +259,7 @@ const postsArr = [
     like_count: 100,
     thumbnail_url: '',
     writer_user_photo_url: '',
-    tag_list: [
-      'Frontend',
-      'Frontend',
-      'Frontend',
-      'Frontend',
-      'Frontend',
-      'Vue.js',
-    ],
+    tag_list: ['Frontend', 'Vue.js'],
   },
 ]
 

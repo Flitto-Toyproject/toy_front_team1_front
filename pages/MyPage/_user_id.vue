@@ -8,6 +8,7 @@
             v-if="!isEditing"
             class="edit-icon"
             src="@/assets/svg/content/edit_profile_icon.svg"
+            alt="edit-icon"
             @click="editProfile"
           />
         </header>
@@ -90,6 +91,13 @@
           />
         </div>
       </div>
+      <PaginationBasic
+        :size="SIZE"
+        :max="MAX"
+        :total="total"
+        :current-page="currentPage"
+        @paginate="paginate"
+      />
     </div>
   </div>
 </template>
@@ -99,10 +107,16 @@ import TitleBasic from '@/components/basic/TitleBasic.vue'
 import MyPageMenuContent from '@/components/content/MyPageMenuContent.vue'
 import ListPostContent from '@/components/content/ListPostContent.vue'
 import { userObj, postsArr } from '@/api/test'
+import PaginationBasic from '@/components/basic/PaginationBasic'
 
 export default {
   name: 'MyPage',
-  components: { TitleBasic, MyPageMenuContent, ListPostContent },
+  components: {
+    PaginationBasic,
+    TitleBasic,
+    MyPageMenuContent,
+    ListPostContent,
+  },
   asyncData() {
     const {
       displayed_name: nickName,
@@ -133,7 +147,14 @@ export default {
       menuArrFlitto: ['All', 'Editing', 'Waiting', 'Rejected', 'Published'],
       contentCount: 53,
       focused: true,
+      SIZE: 9, // TODO: constant 처리
+      MAX: 3,
+      total: 0,
+      currentPage: 1,
     }
+  },
+  created() {
+    this.total = postsArr.length
   },
   methods: {
     editProfile() {
@@ -153,6 +174,19 @@ export default {
     },
     selectMenu(_menu) {
       this.selectedMenu = _menu
+    },
+    paginate(_page) {
+      switch (_page) {
+        case 'prev':
+          this.currentPage--
+          break
+        case 'next':
+          this.currentPage++
+          break
+        default:
+          this.currentPage = _page
+          break
+      }
     },
   },
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="layout-container">
     <HeaderComponent />
-    <Nuxt></Nuxt>
+    <Nuxt :keyword="keyword"></Nuxt>
     <FooterComponent class="footer" />
   </div>
 </template>
@@ -12,6 +12,16 @@ import FooterComponent from '../components/FooterComponent.vue'
 export default {
   name: 'DefaultLayout',
   components: { HeaderComponent, FooterComponent },
+  data() {
+    return {
+      keyword: '',
+    }
+  },
+  created() {
+    this.$nuxt.$on('keyword', (keyword) => {
+      this.keyword = keyword
+    })
+  },
 }
 </script>
 

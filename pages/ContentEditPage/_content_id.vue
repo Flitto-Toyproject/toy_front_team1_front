@@ -46,7 +46,7 @@
             <div class="content-additional__preview" />
           </div>
         </div>
-        <div class="button-wrapper">
+        <DefaultButtonContent>
           <ButtonContent
             :value="'발행'"
             :is-major="true"
@@ -58,7 +58,7 @@
             @click="saveContent"
           />
           <ButtonContent :value="'취소'" @click="cancelContent" />
-        </div>
+        </DefaultButtonContent>
       </div>
     </div>
   </div>
@@ -67,6 +67,7 @@
 <script>
 // import axios from 'axios'
 
+import DefaultButtonContent from '@/components/content/DefaultButtonContent.vue'
 import ButtonContent from '@/components/content/ButtonContent'
 import InputBasic from '@/components/basic/InputBasic'
 import TagContent from '@/components/content/TagContent'
@@ -74,7 +75,13 @@ import EditorComponent from '@/components/EditorComponent.vue'
 
 export default {
   name: 'ContentPage',
-  components: { TagContent, InputBasic, ButtonContent, EditorComponent },
+  components: {
+    DefaultButtonContent,
+    TagContent,
+    InputBasic,
+    ButtonContent,
+    EditorComponent,
+  },
   asyncData({ params, error }) {
     let isNewContent
     let editingData = null
@@ -177,7 +184,7 @@ export default {
   justify-content: center;
   align-items: center;
 
-  width: 60rem;
+  width: 55rem;
   padding: 1rem 1.5rem;
   @include tablet {
     width: 40rem;

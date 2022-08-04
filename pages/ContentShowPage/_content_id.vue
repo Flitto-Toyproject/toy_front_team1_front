@@ -1,10 +1,14 @@
 <template>
   <div class="wrap">
-    <div class="content-wrapper">
-      <div class="content-top-wrapper">
+    <div class="post-wrapper">
+      <div class="post-top-wrapper">
         <div class="title-wrapper">
           <strong class="title">{{ POST.title }}</strong>
-          <StatusContent :is-show="true" :status="POST.status" />
+          <StatusContent
+            v-if="isAuthorized && isWriter"
+            :is-show="true"
+            :status="POST.status"
+          />
         </div>
         <div class="extra-wrapper">
           <div class="profile-wrapper">
@@ -21,14 +25,32 @@
             />
           </div>
           <div class="action-wrapper">
-            <p class="action__reject" @click="rejectAction('reject')">
+            <p
+              v-if="isAuthorized && hasPermission && isRejected"
+              class="action__reject"
+              @click="rejectAction('reject')"
+            >
               거절사유
             </p>
-            <p class="action__claim" @click="claimAction('claim')">이의제기</p>
-            <p class="action__modify" @click="modifyAction('modify')">
+            <p
+              v-if="isAuthorized && hasPermission && isRejected"
+              class="action__claim"
+              @click="claimAction('claim')"
+            >
+              이의제기
+            </p>
+            <p
+              v-if="isAuthorized && isWriter"
+              class="action__modify"
+              @click="modifyAction('modify')"
+            >
               <nuxt-link to="contenteditpage">수정하기</nuxt-link>
             </p>
-            <p class="action__remove" @click="removeAction('remove')">
+            <p
+              v-if="isAuthorized && hasPermission"
+              class="action__remove"
+              @click="removeAction('remove')"
+            >
               삭제하기
             </p>
           </div>
@@ -59,22 +81,31 @@
           />
         </div>
         <div class="content">
-          <div class="paragraph" v-html="POST.content" />
-          <div class="like-wrapper">
-            <div class="like-wrapper__top">
-              <div class="top__paragraph">{{ likedParagraph }}</div>
-              <div class="top__liked-count">{{ POST.like_count }}</div>
-              <img
-                class="top__liked-button"
-                :src="require(`@/assets/svg/flitto/${likedButton}`)"
-                alt="flitto_logo"
-                @click="clickLikeButton"
-              />
+          <div class="content__wrapper">
+            <div class="paragraph" v-html="POST.content" />
+            <div
+              v-if="!isAuthorized || (!isAdmin && isPublished)"
+              class="like-wrapper"
+            >
+              <div class="like-wrapper__top">
+                <div class="top__paragraph">{{ likedParagraph }}</div>
+                <div class="top__liked-count">{{ POST.like_count }}</div>
+                <img
+                  class="top__liked-button"
+                  :src="require(`@/assets/svg/flitto/${likedButton}`)"
+                  alt="flitto_logo"
+                  @click="clickLikeButton"
+                />
+              </div>
+              <p class="sharing-button" @click="shareContent">공유하기</p>
             </div>
-            <p class="sharing-button" @click="shareContent">공유하기</p>
           </div>
         </div>
       </div>
+      <DefaultButtonContent v-if="isAdmin && isWaiting">
+        <ButtonContent :value="'승인'" :is-major="true" @click="acceptAction" />
+        <ButtonContent :value="'거절'" @click="rejectAction" />
+      </DefaultButtonContent>
     </div>
   </div>
 </template>
@@ -86,6 +117,8 @@ import { postObj, userObj } from '@/api/test'
 import SimpleModal from '@/components/modal/SimpleModal'
 import DefaultModal from '@/components/modal/DefaultModal'
 import RejectModal from '@/components/modal/RejectModal'
+import DefaultButtonContent from '@/components/content/DefaultButtonContent.vue'
+import ButtonContent from '@/components/content/ButtonContent.vue'
 
 export default {
   name: 'ContentShowPage',
@@ -95,16 +128,29 @@ export default {
     StatusContent,
     TagContent,
     RejectModal,
+    DefaultButtonContent,
+    ButtonContent,
   },
   asyncData({ params, error }) {
     if (isNaN(params.content_id)) {
       error(404)
     }
+
+    const isAuthorized = true
+    const POST = { ...postObj }
+    const USER = { ...userObj }
+
+    const isWriter = POST.writer_user_id === USER.user_id
+    const isAdmin = USER.user_type === 'A'
+
+    if (!(isWriter || isAdmin) && POST.status !== 'P') {
+      error(404)
+    }
+
+    return { isAuthorized, POST, USER, isWriter, isAdmin }
   },
   data() {
     return {
-      POST: { ...postObj },
-      USER: { ...userObj },
       tags: ['frontend', 'react', 'vue'],
       likedParagraph:
         '이 글이 도움이 되었다면 플리토 로고를 눌러주세요! \n 더 좋은 글을 발행하는 데 힘이 됩니다.',
@@ -126,6 +172,23 @@ export default {
       rejectInput: '',
     }
   },
+  computed: {
+    hasPermission() {
+      return this.isWriter || this.isAdmin
+    },
+    isWaiting() {
+      const POST_STATUS = this.POST.status
+      return POST_STATUS === 'W'
+    },
+    isPublished() {
+      const POST_STATUS = this.POST.status
+      return POST_STATUS === 'P'
+    },
+    isRejected() {
+      const POST_STATUS = this.POST.status
+      return POST_STATUS === 'R'
+    },
+  },
   methods: {
     async shareContent() {
       try {
@@ -140,6 +203,7 @@ export default {
       if (this.post.is_like) this.likedButton = 'flitto_logo.svg'
       else this.likedButton = 'flitto_logo_gray.svg'
     },
+    acceptAction() {},
     rejectAction() {
       this.rejectModalObj.isShow = true
       this.rejectModalObj.isReject = true // true= 거절 사유, false= 이의제기 사유
@@ -169,7 +233,7 @@ export default {
     removeAction() {
       this.simpleModalObj.isShow = true
       this.simpleModalObj.text = '삭제하시겠습니까?'
-      this.simpleModalObj.buttonCount = 1
+      this.simpleModalObj.buttonCount = 2
     },
     confirmModal() {
       console.log('삭제 로직 필요')
@@ -191,11 +255,16 @@ export default {
 .wrap {
   height: 100%;
 }
-.content-wrapper {
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+.post-wrapper {
   min-height: calc(100vh - 240px);
   padding: 1em 2em;
 }
-.content-top-wrapper {
+.post-top-wrapper {
   display: flex;
   flex-direction: column;
 }
@@ -271,6 +340,21 @@ export default {
   padding: 2em;
   color: $black;
   line-height: 1.5em;
+
+  display: flex;
+  align-items: center;
+
+  &__wrapper {
+    width: 70rem;
+
+    @include laptop {
+      width: 50rem;
+    }
+
+    @include tablet {
+      width: 25rem;
+    }
+  }
 }
 .action-wrapper {
   color: $normal-blue;

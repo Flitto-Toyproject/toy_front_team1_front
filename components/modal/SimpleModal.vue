@@ -1,7 +1,7 @@
 <template>
   <div class="modal-inner">
     <p class="modal-text">{{ modalObj.text }}</p>
-    <div class="button-wrapper">
+    <DefaultButtonContent>
       <ButtonContent
         :value="modalObj.buttonCount === 2 ? modalObj.yes : modalObj.confirm"
         @click="confirm"
@@ -11,15 +11,17 @@
         :value="modalObj.no"
         @click="close"
       />
-    </div>
+    </DefaultButtonContent>
   </div>
 </template>
 
 <script>
 import ButtonContent from '@/components/content/ButtonContent'
+import DefaultButtonContent from '@/components/content/DefaultButtonContent.vue'
+
 export default {
   name: 'SimpleModal',
-  components: { ButtonContent },
+  components: { ButtonContent, DefaultButtonContent },
   props: {
     modalObj: {
       type: Object,
@@ -62,13 +64,5 @@ export default {
   color: $black;
   font-size: 1.5em;
   font-weight: 700;
-}
-.button-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  :not(:first-child) {
-    margin-left: 1em;
-  }
 }
 </style>

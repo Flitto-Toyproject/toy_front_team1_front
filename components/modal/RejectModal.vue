@@ -15,23 +15,24 @@
         {{ modalObj.content }}
       </div>
     </div>
-    <div class="modal__button">
+    <DefaultButtonContent>
       <ButtonContent :value="'확인'" :is-major="true" @click="handleConfirm" />
       <ButtonContent
         v-if="modalObj.isInput"
         :value="'취소'"
         @click="handleCancel"
       />
-    </div>
+    </DefaultButtonContent>
   </div>
 </template>
 
 <script>
 import ButtonContent from '../content/ButtonContent.vue'
+import DefaultButtonContent from '../content/DefaultButtonContent.vue'
 
 export default {
   name: 'RejectModal',
-  components: { ButtonContent },
+  components: { ButtonContent, DefaultButtonContent },
   props: {
     modalObj: {
       type: Object,
@@ -114,16 +115,6 @@ export default {
   }
   &::placeholder {
     font-size: 1rem;
-  }
-}
-
-.modal__button {
-  display: flex;
-  justify-content: center;
-  margin: 1rem;
-
-  :not(:first-child) {
-    margin-left: 1rem;
   }
 }
 </style>

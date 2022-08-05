@@ -57,12 +57,24 @@
       </div>
       <div class="result">
         <div class="mypage__header">
-          <TitleBasic title-content="Publication" />
+          <TitleBasic :title-content="isAdmin ? 'Request' : 'Publication'" />
         </div>
-        <div class="result__menu">
+        <div v-if="isAdmin" class="result__menu">
           <div class="result__menu-content">
             <MyPageMenuContent
-              v-for="menu in menuArr"
+              v-for="menu in menuArrAdmin"
+              :key="menu"
+              :menu="menu"
+              :content-count="contentCount"
+              :focused="selectedMenu === menu"
+              @click="selectMenu(menu)"
+            />
+          </div>
+        </div>
+        <div v-else class="result__menu">
+          <div class="result__menu-content">
+            <MyPageMenuContent
+              v-for="menu in menuArrFlitto"
               :key="menu"
               :menu="menu"
               :content-count="contentCount"
@@ -112,15 +124,27 @@ export default {
       photo_url: photoUrl,
       user_type: userType,
     } = userObj
+    const isAdmin = userType === 'A'
+    const selectedMenu = isAdmin ? 'Waiting' : 'All'
+
     const postsArrSliced = postsArr.slice(0, 3)
-    return { nickName, email, photoUrl, userType, postsArrSliced }
+
+    return {
+      nickName,
+      email,
+      photoUrl,
+      userType,
+      isAdmin,
+      selectedMenu,
+      postsArrSliced,
+    }
   },
   data() {
     return {
       url: require('~/assets/img/vue_logo.png'),
       isEditing: false,
-      menuArr: ['All', 'Editing', 'Waiting', 'Rejected', 'Published'],
-      selectedMenu: 'All',
+      menuArrAdmin: ['Waiting', 'Objection', 'Authorization'],
+      menuArrFlitto: ['All', 'Editing', 'Waiting', 'Rejected', 'Published'],
       contentCount: 53,
       focused: true,
       SIZE: 9, // TODO: constant 처리
@@ -278,10 +302,7 @@ export default {
   }
 
   &__menu-content {
-    width: 90%;
-
     display: flex;
-    justify-content: space-between;
   }
 }
 </style>

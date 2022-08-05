@@ -205,6 +205,7 @@ export default {
     },
     acceptAction() {},
     rejectAction() {
+      console.log('window.scrollY', window.scrollY)
       this.rejectModalObj.isShow = true
       this.rejectModalObj.isReject = true // true= 거절 사유, false= 이의제기 사유
       switch (this.USER.user_type) {

@@ -21,31 +21,45 @@
         alt="search_icon"
         @click="searchKeyword"
       />
-      <strong v-if="isLogin" class="header-right__login" @click="login">
+      <strong
+        v-if="!isAuthorized"
+        class="header-right__login"
+        @click="openLoginDropdown"
+      >
         로그인
       </strong>
       <div v-else class="profile-wrapper" @click="goToMypage">
         <div class="profile-wrapper__profile-img" />
         <div class="profile-wrapper__alert" />
       </div>
+      <BeforeLoginDropdown v-if="openDropdown" @login="login" />
     </div>
   </header>
 </template>
 
 <script>
+import axios from 'axios'
 import InputBasic from '@/components/basic/InputBasic'
+import BeforeLoginDropdown from '@/components/dropdown/BeforeLoginDropdown.vue'
+// import { userObj } from '@/api/test'
+
 export default {
   name: 'HeaderComponent',
-  components: { InputBasic },
+  components: { InputBasic, BeforeLoginDropdown },
   data() {
     return {
-      isLogin: true,
       keyword: '',
+      userInfo: {},
+      isAuthorized: false,
+      openDropdown: false,
     }
   },
   methods: {
-    login() {
-      this.isLogin = !this.isLogin
+    async login() {
+      const data = await axios.get(
+        `http://localhost:33000/api/auth/login/google`,
+      )
+      console.log(data)
     },
     goToTeckHome() {
       this.$router.push('/')
@@ -53,6 +67,9 @@ export default {
     goToMypage() {},
     searchKeyword() {
       this.$nuxt.$emit('keyword', this.keyword)
+    },
+    openLoginDropdown() {
+      this.openDropdown = true
     },
   },
 }
@@ -89,9 +106,11 @@ header {
   }
 }
 .header-right {
+  width: 25em;
+  position: relative;
+
   display: flex;
   flex-direction: row;
-  width: 25em;
   justify-content: space-between;
   align-items: center;
   &__search-input {

@@ -22,14 +22,14 @@
         <div class="posts-wrap">
           <div v-if="isShowingGrid" class="posts">
             <GridPostContent
-              v-for="post in posts"
+              v-for="post in $store.state.posts"
               :key="post.post_id"
               :post-obj="post"
             />
           </div>
           <div v-else>
             <ListPostContent
-              v-for="post in posts"
+              v-for="post in $store.state.posts"
               :key="post.post_id"
               :post-obj="post"
             />
@@ -67,25 +67,18 @@
 </template>
 
 <script>
-import { tagArr, postsArr } from '@/api/test'
+import { tagArr } from '@/api/test'
 import GridPostContent from '@/components/content/GridPostContent.vue'
 import ListPostContent from '@/components/content/ListPostContent.vue'
 import PaginationBasic from '@/components/basic/PaginationBasic'
+import { GET_POSTS } from '@/store'
 
 export default {
   name: 'MainPage',
   components: { PaginationBasic, ListPostContent, GridPostContent },
-  props: {
-    keyword: {
-      type: [Number, String],
-      default: '',
-      required: false,
-    },
-  },
   data() {
     return {
       tags: [...tagArr],
-      posts: [...postsArr],
       displayIcons: {
         grid: 'grid_selected.svg',
         list: 'list.svg',
@@ -96,10 +89,12 @@ export default {
       MAX: 3,
       total: 0,
       currentPage: 1,
+      keyword: '',
     }
   },
-  created() {
-    this.total = postsArr.length
+  async fetch() {
+    await this.$store.dispatch(GET_POSTS)
+    this.total = this.$store.state.posts.length
   },
   methods: {
     searchByTag(_tag) {

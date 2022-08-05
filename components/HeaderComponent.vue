@@ -66,7 +66,7 @@ export default {
     },
     goToMypage() {},
     searchKeyword() {
-      this.$nuxt.$emit('keyword', this.keyword)
+      // this.$store.commit('changeKeyword', this.keyword)
     },
     openLoginDropdown() {
       this.openDropdown = true

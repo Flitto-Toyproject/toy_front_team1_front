@@ -45,7 +45,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/style-resources'],
+  modules: ['@nuxtjs/style-resources', '@nuxtjs/axios', '@nuxtjs/proxy'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -59,5 +59,17 @@ export default {
   // port
   server: {
     port: 4000,
+  },
+
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api': {
+      target: 'http://localhost:33000',
+      secure: false,
+      changeOrigin: true,
+    },
   },
 }

@@ -27,7 +27,8 @@ const postsArr = [
     writer_user_id: 'hyoeun.kim@flitto.com',
     writer_name: '김효은',
     title: '프론트엔드 스터디 회고',
-    content: '안녕하세요. 플리토입니다! 이번 플리토 Server팀',
+    content:
+      '안녕하세요. 플리토입니다! 이번 플리토 Server팀 안녕하세요. 플리토입니다! 이번 플리토 Server팀 안녕하세요. 플리토입니다! 이번 플리토 Server팀 안녕하세요. 플리토입니다! 이번 플리토 Server팀 안녕하세요. 플리토입니다! 이번 플리토 Server팀 안녕하세요. 플리토입니다! 이번 플리토 Server팀 안녕하세요. 플리토입니다! 이번 플리토 Server팀',
     created_at: '2022-08-01',
     updated_at: '2022-08-01',
     published_at: '2022-08-01',

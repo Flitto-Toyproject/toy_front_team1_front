@@ -14,11 +14,7 @@
         class="login-form__continue-with-google"
         src="@/assets/svg/login/continue_with_google.svg"
         alt="continue_with_google"
-      />
-      <img
-        class="login-form__signup-with-google"
-        src="@/assets/svg/login/signup_with_google.svg"
-        alt="continue_with_google"
+        @click="login"
       />
     </div>
   </div>
@@ -27,20 +23,36 @@
 <script>
 export default {
   name: 'BeforeLoginDropdown',
+  methods: {
+    login() {
+      this.$emit('login')
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .login-form {
+  position: absolute;
+  top: 3.2rem;
+  right: 0;
+  background-color: white;
+  z-index: 999;
+  border: 0.1rem solid $light-gray;
+
   width: 25rem;
-  height: 18.75rem;
+  height: 16rem;
+
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   padding: 1em;
-  border-radius: 2rem;
-  // border: solid $black 0.1rem;
+  border-radius: 2rem 0 2rem 2rem;
+
+  &__continue-with-google {
+    cursor: pointer;
+  }
 }
 
 .login-form__logo-img {

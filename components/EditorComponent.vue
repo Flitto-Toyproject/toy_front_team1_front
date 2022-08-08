@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import MyUploadAdapter from '@/assets/editor.js'
+
 let Editor
 let CKEditor
 
@@ -37,13 +39,10 @@ export default {
   data() {
     return {
       editor: Editor,
-      editorConfig: {},
+      editorConfig: {
+        extraPlugins: [MyUploadAdapter],
+      },
     }
-  },
-  methods: {
-    changedData() {
-      console.log('changed!')
-    },
   },
 }
 </script>

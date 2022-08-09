@@ -25,3 +25,20 @@ $ npm run dev
 $ npm run build
 $ npm run start
 ```
+
+## Editor Image Server 사용
+에디터 사용 시 이미지 업로드를 위해서 작동시켜야 하는 이미지 서버입니다.
+
+```bash
+# 서버 디렉토리로 이동
+$ cd server
+
+# dependencies 설치
+$ npm i
+
+# 이미지 서버 실행, localhost:8080
+$ node api
+
+# 저장된 이미지 확인
+$ cd public
+```

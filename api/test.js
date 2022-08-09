@@ -308,4 +308,72 @@ const tagArr = [
   },
 ]
 
-export { postObj, userObj, tagArr, postsArr }
+const notiDataArr = [
+  {
+    notification_id: 1,
+    message: '김도경 님이 flitto_admin 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/12',
+    created_at: '2022-08-09 11:27:35',
+    read: true,
+  },
+  {
+    notification_id: 2,
+    message: '김도경 님이 플리토 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/13',
+    created_at: '2022-08-09 10:27:35',
+    read: false,
+  },
+  {
+    notification_id: 3,
+    message: '김도경 님이 flitto_admin 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/14',
+    created_at: '2022-08-08 11:27:35',
+    read: false,
+  },
+  {
+    notification_id: 4,
+    message:
+      'asdfghjklqwertyuiopzxcvbnm 님이 플리토 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/15',
+    created_at: '2022-08-08 10:27:35',
+    read: false,
+  },
+  {
+    notification_id: 5,
+    message: '김도경 님이 플리토 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/15',
+    created_at: '2022-08-07 10:27:35',
+    read: false,
+  },
+  {
+    notification_id: 6,
+    message:
+      '<strong>dkkim0122</strong> 님이 <strong>플리토</strong> 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/15',
+    created_at: '2022-08-06 10:27:35',
+    read: true,
+  },
+  {
+    notification_id: 7,
+    message: '김도경 님이 플리토 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/15',
+    created_at: '2022-08-05 10:27:35',
+    read: false,
+  },
+  {
+    notification_id: 8,
+    message: 'brueberry 님이 플리토 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/20',
+    created_at: '2022-08-05 13:27:35',
+    read: false,
+  },
+  {
+    notification_id: 9,
+    message: '김도경 님이 플리토 님의 글 발행 요청을 수락하였습니다!',
+    redirect_url: '/contentshowpage/20',
+    created_at: '2022-08-05 15:27:35',
+    read: false,
+  },
+]
+
+export { postObj, userObj, tagArr, postsArr, notiDataArr }

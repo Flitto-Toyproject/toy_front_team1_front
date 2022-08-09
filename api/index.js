@@ -35,8 +35,12 @@ function deleteUserById(_id) {
 }
 
 // post
-function getPosting() {
-  return instance.get(`post`)
+function getPosting(_params) {
+  return instance.get(`post`, _params)
+}
+
+function getPostingByKeyword(_params) {
+  return instance.get(`post/search/`, _params)
 }
 
 function getPostingById(_id) {
@@ -91,4 +95,5 @@ export {
   getTags,
   getNotification,
   postNotificationById,
+  getPostingByKeyword,
 }

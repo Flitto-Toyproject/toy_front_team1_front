@@ -3,7 +3,8 @@
     <div class="wrap">
       <div class="content-wrap">
         <div v-if="keyword" class="search-wrap">
-          Searched For : <span class="search-wrap__keyword">{{ keyword }}</span>
+          Searched For :
+          <span class="search-wrap__keyword">{{ keyword }}</span>
         </div>
         <div class="display-icons">
           <img
@@ -75,6 +76,17 @@ import { GET_POSTS } from '@/store'
 export default {
   name: 'IndexPage',
   components: { PaginationBasic, ListPostContent, GridPostContent },
+  async asyncData({ store }) {
+    const params = {
+      search_type: 'all',
+      limit: 9,
+      offset: 0,
+      keyword: store.state.keyword,
+      status: 'P',
+    }
+    await store.dispatch(GET_POSTS, params)
+    return { posts: store.state.posts }
+  },
   data() {
     return {
       tags: [...tagArr],
@@ -88,12 +100,21 @@ export default {
       MAX: 3,
       total: 0,
       currentPage: 1,
-      keyword: '',
     }
   },
   async fetch() {
     await this.$store.dispatch(GET_POSTS)
     this.total = this.$store.state.posts.length
+  },
+  computed: {
+    keyword() {
+      return this.$store.state.keyword
+    },
+  },
+  watch: {
+    'this.$store.state.keyword'(val) {
+      console.log(val)
+    },
   },
   methods: {
     searchByTag(_tag) {

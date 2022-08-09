@@ -60,16 +60,4 @@ export default {
   server: {
     port: 4000,
   },
-
-  axios: {
-    proxy: true,
-  },
-
-  proxy: {
-    '/api': {
-      target: 'http://localhost:33000',
-      secure: false,
-      changeOrigin: true,
-    },
-  },
 }

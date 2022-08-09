@@ -54,6 +54,11 @@ export default {
       openDropdown: false,
     }
   },
+  // watch: {
+  //   '$store.state.keyword'(val) {
+  //     console.log(val)
+  //   },
+  // },
   methods: {
     async login() {
       const data = await axios.get(
@@ -66,7 +71,9 @@ export default {
     },
     goToMypage() {},
     searchKeyword() {
-      this.$nuxt.$emit('keyword', this.keyword)
+      this.$store.commit('changeKeyword', this.keyword)
+      this.$router.push('/')
+      this.keyword = ''
     },
     openLoginDropdown() {
       this.openDropdown = true

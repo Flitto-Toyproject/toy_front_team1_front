@@ -29,7 +29,11 @@ export default {
   css: ['@/assets/css/reset.css', '@/assets/css/font.css'],
 
   styleResources: {
-    scss: ['@/assets/scss/colors.scss', '@/assets/scss/screen.scss'],
+    scss: [
+      '@/assets/scss/colors.scss',
+      '@/assets/scss/screen.scss',
+      '@/assets/scss/my-page.scss',
+    ],
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

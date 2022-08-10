@@ -83,12 +83,43 @@
             />
           </div>
         </div>
-        <div class="my-contents">
+        <div
+          v-if="isAdmin && selectedMenu !== 'Authorization'"
+          class="my-contents"
+        >
           <ListPostContent
             v-for="postObj in postsArrSliced"
             :key="postObj.id"
             :post-obj="postObj"
           />
+        </div>
+        <div
+          v-if="isAdmin && selectedMenu === 'Authorization'"
+          class="admin-authorization"
+        >
+          <div
+            v-for="(notifications, key) in notiPerDays"
+            :key="key"
+            class="auth-noti__per-day"
+          >
+            <div class="auth-noti-wrap">
+              <div
+                v-for="noti in notifications"
+                :key="noti.notification_id"
+                class="auth-noti"
+              >
+                <div class="auth-noti__texts">
+                  <div class="auth-noti__message" v-html="noti.message" />
+                  <div class="auth-noti__time">{{ noti.created_at }}</div>
+                </div>
+
+                <div class="auth-noti__btns">
+                  <div class="auth-noti__auth">권한 부여</div>
+                  <div class="auth-noti__reject">거절</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <PaginationBasic
@@ -103,10 +134,11 @@
 </template>
 
 <script>
+import { formatRelative } from 'date-fns'
 import TitleBasic from '@/components/basic/TitleBasic.vue'
 import MyPageMenuContent from '@/components/content/MyPageMenuContent.vue'
 import ListPostContent from '@/components/content/ListPostContent.vue'
-import { userObj, postsArr } from '@/api/test'
+import { userObj, postsArr, authNotiDataArr } from '@/api/test'
 import PaginationBasic from '@/components/basic/PaginationBasic'
 
 export default {
@@ -129,6 +161,19 @@ export default {
 
     const postsArrSliced = postsArr.slice(0, 3)
 
+    const notiPerDays = {}
+    const dayExpression = { today: '오늘', yesterday: '어제' }
+    const today = new Date()
+
+    authNotiDataArr.forEach((noti) => {
+      const day = noti.created_at.split(' ')[0]
+      const relativeDay = formatRelative(new Date(day), today).split(' at')[0]
+      const dayKey = dayExpression[relativeDay] ?? day
+
+      const value = notiPerDays[dayKey]
+      notiPerDays[dayKey] = value ? [...value, noti] : [noti]
+    })
+
     return {
       nickName,
       email,
@@ -137,6 +182,7 @@ export default {
       isAdmin,
       selectedMenu,
       postsArrSliced,
+      notiPerDays,
     }
   },
   data() {
@@ -304,5 +350,57 @@ export default {
   &__menu-content {
     display: flex;
   }
+}
+.auth-noti__per-day {
+  display: flex;
+}
+
+.auth-noti-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.auth-noti {
+  padding: 1em 0.5em;
+  font-size: 0.8rem;
+
+  display: flex;
+  justify-content: space-between;
+
+  &:hover {
+    background-color: $light-gray;
+  }
+}
+
+.auth-noti__message {
+  padding-bottom: 0.5rem;
+}
+
+.auth-noti__time {
+  color: $deep-gray;
+}
+
+.auth-noti__texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-noti__btns {
+  display: flex;
+}
+
+.auth-noti__auth {
+  @include auth-noti__btn;
+  margin-right: 1em;
+  border: 1px solid $normal-blue;
+  background-color: $normal-blue;
+}
+
+.auth-noti__reject {
+  @include auth-noti__btn;
+  border: 1px solid $deep-gray;
+  background-color: $deep-gray;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="header-left" @click="goToTeckHome">
+    <div class="header-left" @click="goToHome">
       <img
         class="header-left__logo-img"
         src="@/assets/svg/header/flitto_logo.svg"
@@ -22,51 +22,58 @@
         @click="searchKeyword"
       />
       <strong
-        v-if="!isAuthorized"
+        v-if="!$store.getters.isAuthenticated"
         class="header-right__login"
-        @click="openLoginDropdown"
+        @click="openCloseDropdown"
       >
         로그인
       </strong>
-      <div v-else class="profile-wrapper" @click="goToMypage">
+      <div v-else class="profile-wrapper" @click="openCloseDropdown">
         <div class="profile-wrapper__profile-img" />
         <div class="profile-wrapper__alert" />
       </div>
-      <BeforeLoginDropdown v-if="openDropdown" @login="login" />
+      <BeforeLoginDropdown
+        v-if="isDropdownOpened && !$store.getters.isAuthenticated"
+        @login="login"
+      />
+      <AfterLoginDropdown
+        v-if="isDropdownOpened && $store.getters.isAuthenticated"
+        @logout="logout"
+        @close="openCloseDropdown"
+      />
     </div>
   </header>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import InputBasic from '@/components/basic/InputBasic'
 import BeforeLoginDropdown from '@/components/dropdown/BeforeLoginDropdown.vue'
-// import { userObj } from '@/api/test'
+import AfterLoginDropdown from '@/components/dropdown/AfterLoginDropdown.vue'
 
 export default {
   name: 'HeaderComponent',
-  components: { InputBasic, BeforeLoginDropdown },
+  components: { InputBasic, BeforeLoginDropdown, AfterLoginDropdown },
   data() {
     return {
       keyword: '',
       userInfo: {},
-      isAuthorized: false,
-      openDropdown: false,
+      isDropdownOpened: false,
     }
   },
-  // watch: {
-  //   '$store.state.keyword'(val) {
-  //     console.log(val)
-  //   },
-  // },
   methods: {
-    async login() {
-      const data = await axios.get(
-        `http://localhost:33000/api/auth/login/google`,
-      )
-      console.log(data)
+    login() {
+      // const data = await axios.get(
+      //   `http://localhost:33000/api/auth/login/google`,
+      // )
+      this.$store.dispatch('LOG_IN')
+      this.isDropdownOpened = false
     },
-    goToTeckHome() {
+    logout() {
+      this.$store.dispatch('LOG_OUT')
+      this.isDropdownOpened = false
+    },
+    goToHome() {
       this.$router.push('/')
     },
     goToMypage() {},
@@ -75,8 +82,8 @@ export default {
       this.$router.push('/')
       this.keyword = ''
     },
-    openLoginDropdown() {
-      this.openDropdown = true
+    openCloseDropdown() {
+      this.isDropdownOpened = !this.isDropdownOpened
     },
   },
 }

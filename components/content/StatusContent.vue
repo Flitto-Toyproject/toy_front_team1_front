@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isShow" class="status" :class="computedStatus[1]">
+  <div class="status" :class="computedStatus[1]">
     {{ computedStatus[0] }}
   </div>
 </template>
@@ -12,11 +12,6 @@ export default {
       type: String,
       default: '',
       required: false,
-    },
-    isShow: {
-      type: Boolean,
-      default: false,
-      required: true,
     },
   },
   data() {

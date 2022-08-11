@@ -1,11 +1,14 @@
 // constants
 import { getPosting, getPostingByKeyword } from '@/api'
 export const GET_POSTS = 'GET_POSTS'
+export const LOG_IN = 'LOG_IN'
+export const LOG_OUT = 'LOG_OUT'
 
 // store
 export const state = () => ({
   posts: [],
   keyword: '',
+  isAuthenticated: false,
 })
 
 export const mutations = {
@@ -15,6 +18,20 @@ export const mutations = {
 
   changeKeyword(state, newKeyword) {
     state.keyword = newKeyword
+  },
+
+  logIn(state) {
+    state.isAuthenticated = true
+  },
+
+  logOut(state) {
+    state.isAuthenticated = false
+  },
+}
+
+export const getters = {
+  isAuthenticated: (state) => {
+    return state.isAuthenticated
   },
 }
 
@@ -29,5 +46,13 @@ export const actions = {
     }
     const posts = [...res.data.post_list]
     commit('getPosts', posts)
+  },
+  [LOG_IN]({ commit }) {
+    // 토큰을 확인하는 로직
+    commit('logIn')
+  },
+  [LOG_OUT]({ commit }) {
+    // 토큰을 확인하는 로직
+    commit('logOut')
   },
 }

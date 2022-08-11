@@ -149,7 +149,9 @@ export default {
     MyPageMenuContent,
     ListPostContent,
   },
-  asyncData() {
+  asyncData({ store, error }) {
+    if (!store.getters.isAuthenticated) error(404)
+
     const {
       displayed_name: nickName,
       email,

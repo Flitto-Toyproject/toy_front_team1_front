@@ -376,4 +376,48 @@ const notiDataArr = [
   },
 ]
 
-export { postObj, userObj, tagArr, postsArr, notiDataArr }
+const authNotiDataArr = [
+  // TODO: 임시. 수정 필요
+  {
+    notification_id: 1,
+    message:
+      '<strong>김도경</strong> 님이 <strong>관리자 권한</strong>을 <b>신청</b>하셨습니다!',
+    redirect_url: '/contentshowpage/12',
+    created_at: '2022-08-09 11:27:35',
+    read: true,
+  },
+  {
+    notification_id: 2,
+    message:
+      '<strong>김효은</strong> 님이 <strong>관리자 권한</strong>을 <b>신청</b>하셨습니다!',
+    redirect_url: '/contentshowpage/13',
+    created_at: '2022-08-09 10:27:35',
+    read: false,
+  },
+  {
+    notification_id: 3,
+    message:
+      '<strong>김소현</strong> 님이 <strong>관리자 권한</strong>을 <b>신청</b>하셨습니다!',
+    redirect_url: '/contentshowpage/13',
+    created_at: '2022-08-10 09:27:35',
+    read: false,
+  },
+  {
+    notification_id: 4,
+    message:
+      '<strong>이필웅</strong> 님이 <strong>관리자 권한</strong>을 <b>신청</b>하셨습니다!',
+    redirect_url: '/contentshowpage/13',
+    created_at: '2022-08-10 11:27:35',
+    read: false,
+  },
+  {
+    notification_id: 5,
+    message:
+      '<strong>윤성철</strong> 님이 <strong>관리자 권한</strong>을 <b>신청</b>하셨습니다!',
+    redirect_url: '/contentshowpage/13',
+    created_at: '2022-08-11 03:27:35',
+    read: false,
+  },
+]
+
+export { postObj, userObj, tagArr, postsArr, notiDataArr, authNotiDataArr }

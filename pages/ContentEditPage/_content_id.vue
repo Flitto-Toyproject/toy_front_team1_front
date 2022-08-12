@@ -82,6 +82,7 @@ export default {
     ButtonContent,
     EditorComponent,
   },
+  middleware: ['auth'],
   asyncData({ params, error }) {
     let isNewContent
     let editingData = null

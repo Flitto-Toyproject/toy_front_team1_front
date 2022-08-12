@@ -76,6 +76,7 @@ import { GET_POSTS } from '@/store'
 export default {
   name: 'IndexPage',
   components: { PaginationBasic, ListPostContent, GridPostContent },
+  middleware: ['auth'],
   async asyncData({ store }) {
     const params = {
       search_type: 'all',

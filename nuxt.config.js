@@ -49,7 +49,12 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/style-resources', '@nuxtjs/axios', '@nuxtjs/proxy'],
+  modules: [
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy',
+    ['cookie-universal-nuxt', { alias: 'cookiz' }],
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

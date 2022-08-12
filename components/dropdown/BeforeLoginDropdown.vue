@@ -1,17 +1,17 @@
 <template>
-  <div class="login-form">
+  <div class="before-login">
     <img
-      class="login-form__logo-img"
+      class="before-login__logo-img"
       src="@/assets/svg/login/flitto_logo_centered.svg"
       alt="flitto_logo"
     />
-    <div class="login-form__decription">
+    <div class="before-login__decription">
       <p><strong>세상의 모든 번역,</strong></p>
       <p><strong>Flitto의 기술 블로그에 참여해보세요!</strong></p>
     </div>
-    <div class="login-form__google-login-form">
+    <div class="before-login__google-login-form">
       <img
-        class="login-form__continue-with-google"
+        class="before-login__continue-with-google"
         src="@/assets/svg/login/continue_with_google.svg"
         alt="continue_with_google"
         @click="login"
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-form {
+.before-login {
   position: absolute;
   top: 3.2rem;
   right: 0;
@@ -55,11 +55,11 @@ export default {
   }
 }
 
-.login-form__logo-img {
+.before-login__logo-img {
   width: 6.25rem;
 }
 
-.login-form__decription {
+.before-login__decription {
   font: {
     family: 'NanumGothic-Bold';
     size: 1.25rem;
@@ -70,7 +70,7 @@ export default {
   align-items: center;
 }
 
-.login-form__google-login-form {
+.before-login__google-login-form {
   height: 45%;
   display: flex;
   flex-direction: column;

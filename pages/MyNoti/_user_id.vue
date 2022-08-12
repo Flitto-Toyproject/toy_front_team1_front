@@ -36,6 +36,7 @@ import { notiDataArr } from '@/api/test.js'
 export default {
   name: 'MyNoti',
   components: { TitleBasic },
+  middleware: ['auth'],
   asyncData() {
     const notiPerDays = {}
     const dayExpression = { today: '오늘', yesterday: '어제' }

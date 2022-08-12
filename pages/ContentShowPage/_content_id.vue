@@ -5,8 +5,7 @@
         <div class="title-wrapper">
           <strong class="title">{{ POST.title }}</strong>
           <StatusContent
-            v-if="isAuthorized && isWriter"
-            :is-show="true"
+            v-if="isAuthenticated && isWriter"
             :status="POST.status"
           />
         </div>
@@ -26,28 +25,28 @@
           </div>
           <div class="action-wrapper">
             <p
-              v-if="isAuthorized && hasPermission && isRejected"
+              v-if="isAuthenticated && hasPermission && isRejected"
               class="action__reject"
               @click="rejectAction('reject')"
             >
               거절사유
             </p>
             <p
-              v-if="isAuthorized && hasPermission && isRejected"
+              v-if="isAuthenticated && hasPermission && isRejected"
               class="action__claim"
               @click="claimAction('claim')"
             >
               이의제기
             </p>
             <p
-              v-if="isAuthorized && isWriter"
+              v-if="isAuthenticated && isWriter"
               class="action__modify"
               @click="modifyAction('modify')"
             >
               <nuxt-link to="contenteditpage">수정하기</nuxt-link>
             </p>
             <p
-              v-if="isAuthorized && hasPermission"
+              v-if="isAuthenticated && hasPermission"
               class="action__remove"
               @click="removeAction('remove')"
             >
@@ -84,7 +83,7 @@
           <div class="content__wrapper">
             <div class="paragraph" v-html="POST.content" />
             <div
-              v-if="!isAuthorized || (!isAdmin && isPublished)"
+              v-if="!isAuthenticated || (!isAdmin && isPublished)"
               class="like-wrapper"
             >
               <div class="like-wrapper__top">
@@ -111,6 +110,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import TagContent from '@/components/content/TagContent'
 import StatusContent from '@/components/content/StatusContent'
 import { postObj, userObj } from '@/api/test'
@@ -131,12 +131,11 @@ export default {
     DefaultButtonContent,
     ButtonContent,
   },
+  middleware: ['auth'],
   asyncData({ params, error }) {
     if (isNaN(params.content_id)) {
       error(404)
     }
-
-    const isAuthorized = true
     const POST = { ...postObj }
     const USER = { ...userObj }
 
@@ -147,7 +146,7 @@ export default {
       error(404)
     }
 
-    return { isAuthorized, POST, USER, isWriter, isAdmin }
+    return { POST, USER, isWriter, isAdmin }
   },
   data() {
     return {
@@ -173,20 +172,18 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isAuthenticated']),
     hasPermission() {
       return this.isWriter || this.isAdmin
     },
     isWaiting() {
-      const POST_STATUS = this.POST.status
-      return POST_STATUS === 'W'
+      return this.POST.status === 'W'
     },
     isPublished() {
-      const POST_STATUS = this.POST.status
-      return POST_STATUS === 'P'
+      return this.POST.status === 'P'
     },
     isRejected() {
-      const POST_STATUS = this.POST.status
-      return POST_STATUS === 'R'
+      return this.POST.status === 'R'
     },
   },
   methods: {

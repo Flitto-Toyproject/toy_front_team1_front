@@ -149,6 +149,7 @@ export default {
     MyPageMenuContent,
     ListPostContent,
   },
+  middleware: ['auth'],
   asyncData({ store, error }) {
     if (!store.getters.isAuthenticated) error(404)
 

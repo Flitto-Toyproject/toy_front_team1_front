@@ -131,6 +131,7 @@ export default {
     DefaultButtonContent,
     ButtonContent,
   },
+  middleware: ['auth'],
   asyncData({ params, error }) {
     if (isNaN(params.content_id)) {
       error(404)

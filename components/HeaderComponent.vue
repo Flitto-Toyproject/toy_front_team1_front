@@ -22,24 +22,24 @@
         @click="searchKeyword"
       />
       <strong
-        v-if="!$store.getters.isAuthenticated"
+        v-if="!isAuthenticated"
         class="header-right__login"
-        @click="openCloseDropdown"
+        @click="toggleDropdown"
       >
         로그인
       </strong>
-      <div v-else class="profile-wrapper" @click="openCloseDropdown">
+      <div v-else class="profile-wrapper" @click="toggleDropdown">
         <div class="profile-wrapper__profile-img" />
         <div class="profile-wrapper__alert" />
       </div>
       <BeforeLoginDropdown
-        v-if="isDropdownOpened && !$store.getters.isAuthenticated"
+        v-if="isDropdownOpened && !isAuthenticated"
         @login="login"
       />
       <AfterLoginDropdown
-        v-if="isDropdownOpened && $store.getters.isAuthenticated"
+        v-if="isDropdownOpened && isAuthenticated"
         @logout="logout"
-        @close="openCloseDropdown"
+        @close="toggleDropdown"
       />
     </div>
   </header>
@@ -47,6 +47,8 @@
 
 <script>
 // import axios from 'axios'
+import { mapGetters } from 'vuex'
+import { GET_TOKEN_FROM_SERVER, LOG_OUT } from '@/store/index.js'
 import InputBasic from '@/components/basic/InputBasic'
 import BeforeLoginDropdown from '@/components/dropdown/BeforeLoginDropdown.vue'
 import AfterLoginDropdown from '@/components/dropdown/AfterLoginDropdown.vue'
@@ -61,17 +63,21 @@ export default {
       isDropdownOpened: false,
     }
   },
+  computed: {
+    ...mapGetters(['isAuthenticated']),
+  },
   methods: {
     login() {
       // const data = await axios.get(
       //   `http://localhost:33000/api/auth/login/google`,
       // )
-      this.$store.dispatch('LOG_IN')
+      this.$store.dispatch(GET_TOKEN_FROM_SERVER)
       this.isDropdownOpened = false
     },
     logout() {
-      this.$store.dispatch('LOG_OUT')
+      this.$store.dispatch(LOG_OUT)
       this.isDropdownOpened = false
+      window.location.reload()
     },
     goToHome() {
       this.$router.push('/')
@@ -82,7 +88,7 @@ export default {
       this.$router.push('/')
       this.keyword = ''
     },
-    openCloseDropdown() {
+    toggleDropdown() {
       this.isDropdownOpened = !this.isDropdownOpened
     },
   },

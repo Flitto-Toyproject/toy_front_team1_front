@@ -257,6 +257,14 @@ export default {
 .content {
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  padding: 1.5em;
+  line-height: 1.5em;
+  color: $black;
+  &__wrapper {
+    width: 100%;
+  }
 }
 .post-wrapper {
   min-height: calc(100vh - 240px);
@@ -286,7 +294,7 @@ export default {
   padding: 1em 0px 0.8em 0px;
   @include tablet {
     flex-direction: column;
-    justify-content: center;
+    align-items: start;
   }
 }
 .profile-wrapper {
@@ -333,26 +341,6 @@ export default {
   display: flex;
   flex-direction: row;
   margin: 0.5em 1em 0px 0px;
-}
-.content {
-  padding: 2em;
-  color: $black;
-  line-height: 1.5em;
-
-  display: flex;
-  align-items: center;
-
-  &__wrapper {
-    width: 70rem;
-
-    @include laptop {
-      width: 50rem;
-    }
-
-    @include tablet {
-      width: 25rem;
-    }
-  }
 }
 .action-wrapper {
   color: $normal-blue;

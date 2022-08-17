@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import MyUploadAdapter from '@/assets/editor.js'
+import MyUploadAdapter from '@/assets/editor-plugins/image-upload.js'
 
 let Editor
 let CKEditor
@@ -41,6 +41,18 @@ export default {
       editor: Editor,
       editorConfig: {
         extraPlugins: [MyUploadAdapter],
+        toolbar: [
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'link',
+          'uploadImage',
+          'blockQuote',
+          '|',
+          'undo',
+          'redo',
+        ],
       },
     }
   },

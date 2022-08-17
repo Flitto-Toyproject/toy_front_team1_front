@@ -38,12 +38,12 @@ export default {
       require: true,
     },
   },
+  setup() {},
   data() {
     return {
       sampleData: '',
     }
   },
-  setup() {},
   created() {},
   mounted() {},
   unmounted() {},
@@ -60,7 +60,7 @@ export default {
 
 .post-skeleton {
   width: 20em;
-  height: 14em;
+  height: 15em;
   background-color: $deep-gray;
   border-radius: 1em;
   position: relative;

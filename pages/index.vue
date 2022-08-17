@@ -166,6 +166,9 @@ export default {
   display: flex;
   justify-content: center;
   padding: 1em 2em;
+  @include tablet {
+    padding: 0px;
+  }
 }
 
 .content-wrap {
@@ -229,13 +232,7 @@ export default {
 }
 
 .posts-wrap {
-  //width: 63em;
-
-  @include laptop {
-    //width: 43.75em;
-  }
   @include tablet {
-    //width: 18.75em;
     min-width: 18.75em;
   }
 }

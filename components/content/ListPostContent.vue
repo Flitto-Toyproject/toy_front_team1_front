@@ -98,7 +98,7 @@ export default {
   flex-direction: column;
   justify-content: space-evenly;
   margin: 0.5em 0;
-  width: 470px;
+  width: 400px;
 
   flex: 1;
 

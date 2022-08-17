@@ -26,6 +26,7 @@
               v-for="post in $store.state.posts"
               :key="post.post_id"
               :post-obj="post"
+              @click="test"
             />
           </div>
           <div v-else>
@@ -118,6 +119,9 @@ export default {
     },
   },
   methods: {
+    test() {
+      console.log('test')
+    },
     searchByTag(_tag) {
       this.selectedTag = _tag
     },
@@ -162,7 +166,9 @@ export default {
   display: flex;
   justify-content: center;
   padding: 1em 2em;
-  width: 85%;
+  @include tablet {
+    padding: 0px;
+  }
 }
 
 .content-wrap {
@@ -199,10 +205,9 @@ export default {
 }
 
 .tags-list {
-  line-height: 2.8em;
-  @include laptop {
-    margin-left: 1em;
-  }
+  line-height: 2.4em;
+  margin: 1em 0px;
+
   &__border-wrapper {
     border-left: 1px solid $deep-gray;
     padding-left: 1.5em;
@@ -215,7 +220,7 @@ export default {
   }
   &__items {
     color: $deep-gray;
-    font-size: 1.1em;
+    font-size: 1em;
   }
   &__selected-item {
     cursor: pointer;
@@ -227,13 +232,8 @@ export default {
 }
 
 .posts-wrap {
-  width: 63em;
-
-  @include laptop {
-    width: 43.75em;
-  }
   @include tablet {
-    width: 18.75em;
+    min-width: 18.75em;
   }
 }
 

@@ -22,7 +22,7 @@
           :key="tag"
           class="tag-content"
           :tag="tag"
-          :isInList="true"
+          :is-in-list="true"
         />
       </div>
     </div>
@@ -41,12 +41,12 @@ export default {
       require: true,
     },
   },
+  setup() {},
   data() {
     return {
       sampleData: '',
     }
   },
-  setup() {},
   created() {},
   mounted() {},
   unmounted() {},
@@ -67,8 +67,8 @@ export default {
 }
 
 .post-skeleton {
-  width: 10em;
-  height: 7em;
+  min-width: 15em;
+  height: 10em;
   background-color: $deep-gray;
   margin-right: 2rem;
   border-radius: 1em;
@@ -85,7 +85,7 @@ export default {
   }
 
   @include tablet {
-    width: 40%;
+    //width: 15em;
     margin-right: 0;
 
     display: flex;
@@ -96,18 +96,19 @@ export default {
 .post-content-wrap {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin: 0.5em 0;
+  width: 400px;
 
   flex: 1;
 
   @include tablet {
-    width: 40%;
+    width: 15em;
   }
 }
 
 .post-title {
-  font-size: 1em;
+  font-size: 1.2em;
   color: $black;
 
   cursor: pointer;
@@ -119,7 +120,7 @@ export default {
 .post-content {
   color: $deep-gray;
   margin: 0.5em 0px;
-  font-size: 0.7em;
+  font-size: 0.8em;
 
   white-space: normal;
   display: -webkit-box;
@@ -138,7 +139,7 @@ export default {
 
     margin-left: 0.5em;
     font: {
-      size: 0.7em;
+      size: 0.8em;
       weight: 500;
     }
   }

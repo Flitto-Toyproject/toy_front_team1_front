@@ -18,8 +18,10 @@
             :key="noti.notification_id"
             class="noti"
           >
-            <div class="noti__message" v-html="noti.message"></div>
-            <div class="noti__time">{{ noti.created_at }}</div>
+            <div class="noti__content">
+              <div class="noti__message" v-html="noti.message"></div>
+              <div class="noti__time">{{ noti.created_at }}</div>
+            </div>
             <div v-if="noti.read" class="notification-alert"></div>
           </div>
         </div>
@@ -108,7 +110,6 @@ export default {
 }
 
 .noti-wrap {
-  position: relative;
   width: 60%;
 
   display: flex;
@@ -120,7 +121,6 @@ export default {
   font-size: 0.8rem;
 
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
 
   cursor: pointer;
@@ -138,13 +138,10 @@ export default {
 }
 
 .notification-alert {
-  width: 0.35em;
-  height: 0.35em;
+  width: 5px;
+  height: 5px;
   background-color: $normal-blue;
   border-radius: 0.35em;
-
-  position: absolute;
-  top: 1.5rem;
-  right: -1.5rem;
+  margin-top: 0.3em;
 }
 </style>

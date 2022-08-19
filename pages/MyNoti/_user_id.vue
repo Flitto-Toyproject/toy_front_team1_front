@@ -17,6 +17,7 @@
             v-for="noti in notifications"
             :key="noti.notification_id"
             class="noti"
+            @click="moveToNotiPost(noti.redirect_url)"
           >
             <div class="noti__message" v-html="noti.message"></div>
             <div class="noti__time">{{ noti.created_at }}</div>
@@ -56,6 +57,10 @@ export default {
   methods: {
     readAllNoti() {
       console.log('read all notifications')
+    },
+    moveToNotiPost(_redirectUrl) {
+      this.$router.push(_redirectUrl)
+      // 해당 알림의 읽음 필드가 true로 바뀌어야 함.
     },
   },
 }

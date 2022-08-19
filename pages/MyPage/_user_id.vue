@@ -91,6 +91,7 @@
             v-for="postObj in postsArrSliced"
             :key="postObj.id"
             :post-obj="postObj"
+            @click="moveToPost(postObj.post_id)"
           />
         </div>
         <div
@@ -138,7 +139,7 @@ import { formatRelative } from 'date-fns'
 import TitleBasic from '@/components/basic/TitleBasic.vue'
 import MyPageMenuContent from '@/components/content/MyPageMenuContent.vue'
 import ListPostContent from '@/components/content/ListPostContent.vue'
-import { userObj, postsArr, authNotiDataArr } from '@/api/test'
+import { postsArr, authNotiDataArr } from '@/api/test'
 import PaginationBasic from '@/components/basic/PaginationBasic'
 
 export default {
@@ -150,15 +151,16 @@ export default {
     ListPostContent,
   },
   middleware: ['auth'],
-  asyncData({ store, error }) {
-    if (!store.getters.isAuthenticated) error(404)
+  asyncData({ store }) {
+    const userInfo = store.getters.getUserInfo
 
     const {
       displayed_name: nickName,
       email,
       photo_url: photoUrl,
       user_type: userType,
-    } = userObj
+    } = userInfo
+
     const isAdmin = userType === 'A'
     const selectedMenu = isAdmin ? 'Waiting' : 'All'
 
@@ -223,6 +225,9 @@ export default {
     },
     selectMenu(_menu) {
       this.selectedMenu = _menu
+    },
+    moveToPost(_postId) {
+      this.$router.push(`/contentshowpage/${_postId}`)
     },
     paginate(_page) {
       switch (_page) {

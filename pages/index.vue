@@ -26,7 +26,7 @@
               v-for="post in $store.state.posts"
               :key="post.post_id"
               :post-obj="post"
-              @click="test"
+              @click="moveToPost(post.post_id)"
             />
           </div>
           <div v-else>
@@ -34,6 +34,7 @@
               v-for="post in $store.state.posts"
               :key="post.post_id"
               :post-obj="post"
+              @click="moveToPost(post.post_id)"
             />
           </div>
         </div>
@@ -119,11 +120,12 @@ export default {
     },
   },
   methods: {
-    test() {
-      console.log('test')
+    moveToPost(_postId) {
+      this.$router.push(`/contentshowpage/${_postId}`)
     },
     searchByTag(_tag) {
       this.selectedTag = _tag
+      this.$store.commit('changeKeyword', _tag)
     },
     selectDisplay(_display) {
       switch (_display) {

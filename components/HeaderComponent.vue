@@ -48,7 +48,11 @@
 <script>
 // import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { GET_TOKEN_FROM_SERVER, LOG_OUT } from '@/store/index.js'
+import {
+  GET_TOKEN_FROM_SERVER,
+  LOG_OUT,
+  GET_USER_INFO_FROM_SERVER,
+} from '@/store/index.js'
 import InputBasic from '@/components/basic/InputBasic'
 import BeforeLoginDropdown from '@/components/dropdown/BeforeLoginDropdown.vue'
 import AfterLoginDropdown from '@/components/dropdown/AfterLoginDropdown.vue'
@@ -72,6 +76,7 @@ export default {
       //   `http://localhost:33000/api/auth/login/google`,
       // )
       this.$store.dispatch(GET_TOKEN_FROM_SERVER)
+      this.$store.dispatch(GET_USER_INFO_FROM_SERVER)
       this.isDropdownOpened = false
     },
     logout() {

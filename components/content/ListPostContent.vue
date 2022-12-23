@@ -1,5 +1,5 @@
 <template>
-  <div class="post-wrap">
+  <div class="post-wrap" @click="handleClick">
     <div class="post-skeleton">
       <img
         class="post-skeleton__flitto-logo"
@@ -41,16 +41,11 @@ export default {
       require: true,
     },
   },
-  setup() {},
-  data() {
-    return {
-      sampleData: '',
-    }
+  methods: {
+    handleClick() {
+      this.$emit('click')
+    },
   },
-  created() {},
-  mounted() {},
-  unmounted() {},
-  methods: {},
 }
 </script>
 
@@ -73,7 +68,7 @@ export default {
   margin-right: 2rem;
   border-radius: 1em;
   position: relative;
-
+  cursor: pointer;
   flex: 0 10em;
 
   &__flitto-logo {

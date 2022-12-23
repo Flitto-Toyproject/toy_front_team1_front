@@ -21,15 +21,17 @@
     </header>
     <nav>
       <ul>
-        <li class="nav__link"><NuxtLink to="/mypage">마이페이지</NuxtLink></li>
-        <li class="nav__link">
+        <li class="nav__link" @click="closeDropdown">
+          <NuxtLink :to="{ path: myPagePath }">마이페이지</NuxtLink>
+        </li>
+        <li class="nav__link" @click="closeDropdown">
           <NuxtLink to="/contenteditpage">새 글 쓰기</NuxtLink>
         </li>
-        <li class="nav__link">
+        <li class="nav__link" @click="closeDropdown">
           <a href="https://www.flitto.com/careers">인재 채용</a>
         </li>
-        <li class="nav__link">
-          <NuxtLink to="/notificationpage">알림</NuxtLink>
+        <li class="nav__link" @click="closeDropdown">
+          <NuxtLink :to="{ path: myNotiPath }">알림</NuxtLink>
           <button @click="showNoti">
             <img
               v-if="!isShowingNoti"
@@ -59,7 +61,18 @@ export default {
   data() {
     return {
       isShowingNoti: true,
+      user_id: 1,
     }
+  },
+  computed: {
+    myPagePath() {
+      const userInfo = this.$store.getters.getUserInfo
+      return `mypage/${userInfo.user_id}`
+    },
+    myNotiPath() {
+      const userInfo = this.$store.getters.getUserInfo
+      return `mynoti/${userInfo.user_id}`
+    },
   },
   methods: {
     showNoti() {
